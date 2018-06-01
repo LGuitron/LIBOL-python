@@ -15,7 +15,8 @@ def load_data(dataset_name, file_format, task_type):
     #libc = cdll.msvcrt
     
     if file_format == 'libsvm':
-        y, xt, n = libsvm.svm_read_problem('data/' + dataset_name)
+        y, xt, n = libsvm.svm_read_problem(dataset_name)
+        #y, xt, n = libsvm.svm_read_problem('data/' + dataset_name)
     
     else:
         print('The file format is not supported.') 

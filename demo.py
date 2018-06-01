@@ -1,24 +1,24 @@
-import sys
 import argparse
 import numpy as np
 from load_data import load_data
 from init_options import Options
 from ol_train import ol_train
+from CV_algorithm import CV_algorithm
+from arg_check import arg_check
 
 def demo():
-    
     # Parser with default options if no arguments are given
     parser = argparse.ArgumentParser(description='Online learning algorithms selection')
-    parser.add_argument('-t', type=str, default='bc')            # Classification Task
-    parser.add_argument('-a', type=str, default='Perceptron')    # OL algorithm
-    parser.add_argument('-d', type=str, default='a7a.t')         # dataset
-    parser.add_argument('-f', type=str, default='libsvm')        # file format
+    parser.add_argument('-t', type=str, help='Classification task (Default bc): {bc, mc} ',dest='task',  default='bc')                # Classification Task
+    parser.add_argument('-a', type=str, help='OL algorithm to run (Default Perceptron):{Perceptron, PA, PA1, PA2, OGD,SOP, CW, SCW, SCW2, AROW}', dest='algorithm', default='Perceptron')                                                                                                            # OL algorithm
+    parser.add_argument('-d', type=str, help='Path to dataset (Default ./data/a7a.t)', dest='path_to_dataset', default='./data/a7a.t')      # dataset
+    parser.add_argument('-f', type=str, help='Input file format (Default libsvm)', dest='file_format',default='libsvm')              # file format
     args = parser.parse_args()
 
-    task_type = args.t
-    algorithm_name = args.a
-    dataset_name = args.d
-    file_format = args.f
+    task_type = args.task
+    algorithm_name = args.algorithm
+    dataset_name = args.path_to_dataset
+    file_format = args.file_format
 
     return_vals = load_data(dataset_name, file_format, task_type) 
     
@@ -28,16 +28,15 @@ def demo():
     xt, y, n = return_vals
 
     #check argument
-    #if arg_check(task_type, y) ~= 0
-    #  disp(['Error: Dataset is not for "' task_type '" task.']);
-    #  return;
-    #end
+    if arg_check(task_type, y) != 0:
+      print("Error: Dataset is not for ", task_type , " task.")
+      return
 
     #initializing paramters
-    _options = Options(algorithm_name, n, task_type); 
+    _options = Options(algorithm_name, n, task_type)
 
     # START selecting paramters...
-    #options = CV_algorithm(y, xt, options); % auto parameter selection
+    _options = CV_algorithm(y, xt, _options)              # auto parameter selection
     # end of paramter selection.
 
     # START generating test ID sequence...

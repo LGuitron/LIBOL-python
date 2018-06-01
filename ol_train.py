@@ -1,4 +1,5 @@
 from init_model import Model
+import numpy as np
 import imp
 import time
 
@@ -35,8 +36,8 @@ def ol_train(Y, X, options):
     err_count= 0
     if (options.task_type == 'bc'):
         nb_class=2;
-    elif strcmp(options.task_type == 'mc'):
-        nb_class=max(Y);
+    elif (options.task_type == 'mc'):
+        nb_class = len(np.unique(Y))
 
     model    = Model(options, d, nb_class)   # init model.w=(0,...,0);
 
@@ -48,15 +49,20 @@ def ol_train(Y, X, options):
     
     
     f_ol = options.method                      # get the name of OL function
+    
+    # Load C module
+    if(f_ol[len(f_ol)-1]=='c'):
+        # Load python module
+        module = imp.load_source( f_ol, './algorithms_c/' + f_ol +'.py')
+        
+    else:
+        # Load python module
+        module = imp.load_source( f_ol, './algorithms/' + f_ol +'.py')
+    
 
-    # import module and function
-    module = imp.load_source( f_ol, './algorithms/' + f_ol +'.py')
     func = getattr( module, f_ol )
-    
 
-    
     for t in range(len(ID)):
-        #print("Training: " , t)
         _id  = int(ID[t])
         y_t = Y[_id];
         x_t = X[_id];
