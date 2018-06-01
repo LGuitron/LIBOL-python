@@ -15,31 +15,28 @@ def SOP(y_t, x_t, model):
     w     = model.w;
     Sigma = model.Sigma;
 
-    # Prediction
 
-    #S_x_t   = x_t*Sigma';
-    S_x_t   = np.dot(x_t, Sigma.T)
+    # Reshape x_t to matrix
+    x_t = np.reshape(x_t, (-1,1))
     
-    #v_t     = x_t*S_x_t';
-    v_t = np.dot(x_t, Sigma.T)
+    # Prediction
+    S_x_t   = np.matmul(x_t.T, Sigma.T)
+    v_t = np.matmul(x_t.T, S_x_t.T)
 
     beta_t  = 1/(v_t+1);
-    Sigma_t = Sigma - beta_t*S_x_t'*S_x_t;
-    %Sigma_t = Sigma - beta_t*Sigma*x_t'*x_t*Sigma; 
-    f_t     = w*Sigma_t*x_t';
-    if (f_t>=0)
-        hat_y_t = 1;
-    else
-        hat_y_t = -1;
-    end
-    %--------------------------------------------------------------------------
-    % Making Update
-    %--------------------------------------------------------------------------
-    l_t = (hat_y_t ~= y_t); % 0 - correct prediction, 1 - incorrect    
-    if (l_t > 0),    
-        w     = w + y_t*x_t;    
-    end
-    model.w = w;
-    model.Sigma = Sigma_t;
+    Sigma_t   = Sigma - beta_t*np.matmul(S_x_t.T, S_x_t)
+    
+    f_t     = np.matmul(np.matmul(w,Sigma), x_t)
+    if (f_t>=0):
+        hat_y_t = 1
+    else:
+        hat_y_t = -1
+
+    # Making Update
+    l_t = (hat_y_t != y_t) # 0 - correct prediction, 1 - incorrect    
+    if (l_t > 0):    
+        w     +=  y_t*x_t.T    
+    model.w = w
+    model.Sigma = Sigma_t
 
     return (model, hat_y_t, l_t)
