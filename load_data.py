@@ -27,14 +27,13 @@ def load_data(dataset_name, file_format, task_type):
         y = y - min(y)
         y = y/max(y)
         y = 2*y - 1
-    
-    #print(y)
+        
     # for binary-class data set in multi-class setting
-    #if ((length(unique(y))==2) && strcmp(task_type,'mc') && (min(y)<=0)),
-    #y = y - min(y) + 1; % shift from -1,0,1,2... to 1,2,3,4,...
-    
-    # for multi-class data set
-    #if ((length(unique(y))>2) && (min(y)<=0)),
-    #y = y - min(y) + 1; % shift from -1,0,1,2... to 1,2,3,4,...
+    if (len(np.unique(y)) == 2 and task_type == 'mc' and min(y)<=0):
+        y = y - min(y)  # shift from -1,0,1,2... to 0,1,2,3,...
+
+    # for multi-class data set 
+    if (len(np.unique(y))>2 and min(y)!=0):
+        y = y - min(y)  # shift from -1,0,1,2... to 0,1,2,3,...
 
     return (xt, y, n)

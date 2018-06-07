@@ -24,19 +24,8 @@ def M_PerceptronU(y_t, x_t, model):
     Fmax   = np.max(F_t)
     hat_y_t = np.argmax(F_t) 
 
-    #E = [];
-    #for i in range(len(F_t)):
-    #    if (F_t[i] > F_t[int(y_t)]):
-    #        E.append(i)
-
-
-    #E = np.where(F_t > F_t[int(y_t)])
-    #norm_E = len(E)
-
     E = np.where(F_t > F_t[int(y_t)])[0]
     norm_E = len(E)
-    #print("E: " , E)
-    #print("E2: " , E2)
     
     # Making update
     l_t = hat_y_t != y_t             # 0 - correct prediction, 1 - incorrect

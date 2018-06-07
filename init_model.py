@@ -104,12 +104,12 @@ class Model:
                 
             
             elif (UPmethod == 'M_SCW1'or UPmethod=='M_SCW2'):
-                self.Sigma = options.a*eye(d);
+                self.Sigma = options.a*np.identity(d);
                 self.C     = options.C;
                 #self.eta   = options.eta;
                 #self.phi   = norminv(options.eta,0,1);     # should use the inverse of normal function
                 #self.phi   = invgauss.cdf(vals, mu)         # should use the inverse of normal function
-                self.phi   = norm.ppf(self.eta)
+                self.phi   = norm.ppf(options.eta)
                 
             elif(UPmethod=='NEW_ALGORITHM'):
                 # initialize the parameters of your algorithm...

@@ -100,7 +100,7 @@ class Options:
                 self.eta = 0.75  # in \eta in [0.5,1]
                 self.a   = 1
 
-            elif (UPmethod == 'M_SCW1' or UPmethod =='MSCW_2'):
+            elif (UPmethod == 'M_SCW1' or UPmethod =='M_SCW2'):
                 self.eta = 0.75
                 self.C   = 1
                 self.a   = 1
