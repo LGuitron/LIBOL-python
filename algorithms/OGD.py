@@ -1,6 +1,11 @@
 import numpy as np
 def OGD(y_t, x_t, model):
-    #OGD: Online Gradient Descent (OGD) algorithms
+    # OGD: Online Gradient Descent (OGD) algorithms
+    #--------------------------------------------------------------------------
+    # Reference:
+    # - Martin Zinkevich. Online convex programming and generalized infinitesimal 
+    # gradient ascent. In ICML, pages 928?36, 2003.
+    #--------------------------------------------------------------------------
     # INPUT:
     #      y_t:     class label of t-th instance;
     #      x_t:     t-th training data instance, e.g., X(t,:);
@@ -15,7 +20,12 @@ def OGD(y_t, x_t, model):
     w         = model.w;
     loss_type = model.loss_type;    # type of loss
     eta       = model.C;            # learning rate
-
+    bias  = model.bias
+    
+    # Add bias term in feature vector
+    if(bias):
+        x_t = np.concatenate(([1],x_t))
+    
     # Prediction
     f_t = np.dot(w,x_t)
     if (f_t>=0):

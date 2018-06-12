@@ -1,6 +1,10 @@
 import numpy as np
 def PA1(y_t, x_t, model):
-    # PA: Passive-Aggressive (PA) learning algorithms
+    # PA1: Passive-Aggressive (PA) learning algorithms (PA-I variant)
+    #--------------------------------------------------------------------------
+    # Reference:
+    # - Koby Crammer, Ofer Dekel, Joseph Keshet, Shai Shalev-Shwartz, and Yoram
+    # Singer. Online passive-aggressive algorithms. JMLR, 7:551?85, 2006.
     #--------------------------------------------------------------------------
     # INPUT:
     #      y_t:     class label of t-th instance;
@@ -15,6 +19,11 @@ def PA1(y_t, x_t, model):
     # Initialization
     w     = model.w
     C     = model.C
+    bias  = model.bias
+
+    # Add bias term in feature vector
+    if(bias):
+        x_t = np.concatenate(([1],x_t))
 
     # Prediction
     f_t = np.dot(w,x_t)

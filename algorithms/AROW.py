@@ -19,25 +19,30 @@ def AROW(y_t, x_t, model):
     w     = model.w
     Sigma = model.Sigma
     r     = model.r
-
+    bias  = model.bias
+    
     # Reshape x_t to matrix
-    x_t = np.reshape(x_t, (-1,1))
-
+    x_t = np.reshape(x_t, (1,-1))
+    
+    # Add bias term in feature vector
+    if(bias):
+        x_t = np.concatenate(([[1]],x_t), axis = 1)
+    
     # Prediction
-    f_t = np.matmul(w,x_t)
+    f_t = np.matmul(w,x_t.T)
     if (f_t>=0):
         hat_y_t = 1
     else:
         hat_y_t = -1
 
     # Making Update
-    v_t = np.matmul(np.matmul(x_t.T,Sigma), x_t)    # confidence
+    v_t = np.matmul(np.matmul(x_t,Sigma), x_t.T)    # confidence
     m_t = f_t;                                      # margin                 
     l_t = max(0,1-m_t*y_t)                          # hinge loss
     if l_t > 0:
         beta_t  = 1/(v_t + r)
         alpha_t = l_t*beta_t
-        S_x_t   = np.matmul(x_t.T,Sigma.T)
+        S_x_t   = np.matmul(x_t,Sigma.T)
         w       = w + alpha_t*y_t*S_x_t
         Sigma   = Sigma - beta_t*np.matmul(S_x_t.T, S_x_t)
         

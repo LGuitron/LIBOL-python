@@ -1,5 +1,12 @@
 import numpy as np
 def Perceptron(y_t, x_t, model):
+
+    # Perceptron: a classical online learning algorithm 
+    # --------------------------------------------------------------------------
+    # Reference:
+    # F. Rosenblatt. The perceptron: A probabilistic model for information
+    # storage and organization in the brain.Psychological Review,65:386?07,1958.
+    # --------------------------------------------------------------------------
     # INPUT:
     #      y_t:     class label of t-th instance;
     #      x_t:     t-th training data instance, e.g., X(t,:);
@@ -12,6 +19,11 @@ def Perceptron(y_t, x_t, model):
     
     # Initialization
     w = model.w
+    bias  = model.bias
+    
+    # Add bias term in feature vector
+    if(bias):
+        x_t = np.concatenate(([1],x_t))
     
     # Prediction
     f_t = np.dot(w,x_t)

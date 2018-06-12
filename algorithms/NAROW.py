@@ -1,11 +1,12 @@
 import numpy as np
-def SCW2(y_t, x_t, model):
-    # SCW-II: Soft Confidence-Weighted Learning Algorithm (variant 2)
+def NAROW(y_t, x_t, model):
+    # NAROW: New Adaptive Regularization Of Weights (AROW) algorithm
     #--------------------------------------------------------------------------
     # Reference:
-    # "Exact Soft Confidence-Weighted Learning", Jielei Wang, Peilin Zhao,
-    # Steven C.H. Hoi, ICML2012, 2012.
+    # Orabona, Francesco and Crammer, Koby. "New adaptive algorithms for online
+    # classification." In NIPS, pp. 1840?848, 2010
     #--------------------------------------------------------------------------
+    # INPUT:
     #      y_t:     class label of t-th instance;
     #      x_t:     t-th training data instance, e.g., X(t,:);
     #    model:     classifier
@@ -18,10 +19,7 @@ def SCW2(y_t, x_t, model):
     # Initialization
     w     = model.w
     Sigma = model.Sigma
-    phi   = model.phi
-    C     = model.C
-    psi   = 1+(phi**2)/2
-    xi    = 1+phi**2
+    b     = model.b
     bias  = model.bias
     
     # Reshape x_t to matrix
@@ -39,17 +37,22 @@ def SCW2(y_t, x_t, model):
         hat_y_t = -1
 
     # Making Update
-    v_t = np.matmul(np.matmul(x_t,Sigma), x_t.T)  # confidence
-    m_t = y_t*f_t;                                # margin
-    n_t = v_t + 1/(2*C)
-    l_t = phi*np.sqrt(v_t)-m_t;                   # loss
+    v_t = np.matmul(np.matmul(x_t,Sigma), x_t.T)    # confidence
+    m_t = f_t;                                      # margin                 
+    l_t = max(0,1-m_t*y_t)                          # hinge loss
     if l_t > 0:
-        alpha_t = max(0,(-(2*m_t*n_t+phi**2*m_t*v_t) + np.sqrt(phi**4*m_t**2*v_t*2+4*n_t*v_t*phi**2*(n_t+v_t*phi*2)))/(2*(n_t**2+n_t*v_t*phi**2)))
-        u_t     = 0.25*(-1*alpha_t*v_t*phi+np.sqrt(alpha_t**2*v_t**2*phi**2+4*v_t))**2
-        beta_t  = alpha_t*phi/(np.sqrt(u_t)+alpha_t*phi*v_t);
+        
+        chi_t = np.matmul(np.matmul(x_t, Sigma),x_t.T)      # inv(A_{t-1}^{-1})?   
+        if chi_t > 1/b:
+            r_t = chi_t/(b*chi_t-1)
+        else:
+            r_t = np.inf
+
+        beta_t  = 1/(v_t + r_t)
+        alpha_t = max(0, 1-m_t)*beta_t
         S_x_t   = np.matmul(x_t,Sigma.T)
         w       = w + alpha_t*y_t*S_x_t;
-        Sigma   = Sigma - beta_t*np.matmul(S_x_t.T, S_x_t)
+        Sigma   = Sigma - beta_t*np.matmul(S_x_t.T, S_x_t)        
         
     model.w     = w
     model.Sigma = Sigma
