@@ -14,12 +14,13 @@ def CV_algorithm(Y,X,options):
 #--------------------------------------------------------------------------
     
     method = options.method
-    
+    method = method.upper()
     if(method=='PERCEPTRON' or method=='ROMMA' or method=='AROMMA' or method=='PA'):
         pass
 
     elif(method=='PA1' or method=='PA2' or method=='NHERD' or method=='WINNOW' or method=='OGD'):
         options = best_parameter_C(Y,X,options)
+        
     
     elif(method=='ALMA'):
         options = best_parameter_C(Y,X,options)
@@ -53,7 +54,7 @@ def CV_algorithm(Y,X,options):
 
     elif(method=='M_PA'or method=='M_PA1'or method=='M_PA2'or method=='M_OGD'):
         options = best_parameter_C(Y,X,options)
-
+        
     elif (method=='M_CW'):
         options = best_parameter_eta(Y,X,options)
 

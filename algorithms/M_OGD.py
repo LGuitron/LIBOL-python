@@ -24,6 +24,11 @@ def M_OGD(y_t, x_t, model):
     #--------------------------------------------------------------------------
     W   = model.W;
     eta = model.C;         # learning rate
+    bias  = model.bias
+
+    # Add bias term in feature vector
+    if(bias):
+        x_t = np.concatenate(([1],x_t))
     
     #--------------------------------------------------------------------------
     # Prediction

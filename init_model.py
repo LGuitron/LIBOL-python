@@ -21,12 +21,10 @@ class Model:
             else:
                 self.w = np.zeros((1,d))
             
-            
-            
-            
             if (UPmethod == 'PERCEPTRON' or UPmethod =='ROMMA' or UPmethod == 'AROMMA' or UPmethod =='PA'):
-                self.bias   = options.bias
-            
+                self.bias        = options.bias
+                self.regularizer = options.regularizer
+                
             elif (UPmethod == 'PA1' or UPmethod == 'PA2'):
                 self.bias   = options.bias
                 self.C = options.C
@@ -40,10 +38,11 @@ class Model:
                 self.k_AL  = 1
                 
             elif (UPmethod == 'OGD'):
-                self.bias   = options.bias
-                self.t         = options.t            # iteration number
-                self.loss_type = options.loss_type    # loss type
-                self.C         = options.C
+                self.bias        = options.bias
+                self.regularizer = options.regularizer
+                self.t           = options.t            # iteration number
+                self.loss_type   = options.loss_type    # loss type
+                self.C           = options.C
             
             elif (UPmethod == 'CW'):
                 self.bias   = options.bias
@@ -107,8 +106,15 @@ class Model:
         
         elif (options.task_type == 'mc'):
             self.task_type = 'mc';
-            self.W = np.zeros((int(nb_class),d))
             self.nb_class = nb_class;
+            
+            # Bias term for each class
+            if(options.bias):
+                self.W = np.zeros((int(nb_class),d+1))
+
+            # No bias terms
+            else:
+                self.W = np.zeros((int(nb_class),d))
             
             if (UPmethod == 'M_PERCEPTRONM' or UPmethod =='M_ROMMA' or UPmethod == 'M_AROMMA'):
                 self.bias   = options.bias
@@ -127,21 +133,31 @@ class Model:
             
             elif (UPmethod == 'M_CW'):
                 self.bias   = options.bias
-                self.Sigma = options.a*np.identity(d)
                 self.eta   = options.eta
                 self.phi   = norm.ppf(self.eta)
+                if(self.bias):
+                    self.Sigma = options.a*np.identity(d+1)    # parameter of M_SCW
+                else:
+                    self.Sigma = options.a*np.identity(d)      # parameter of M_SCW
+        
         
             elif(UPmethod =='M_AROW'):
                 self.bias   = options.bias
                 self.r     = options.C                     # parameter of AROW
-                self.Sigma = options.a*np.identity(d)      # parameter of AROW
+                if(self.bias):
+                    self.Sigma = options.a*np.identity(d+1)    # parameter of M_AROW
+                else:
+                    self.Sigma = options.a*np.identity(d)      # parameter of M_AROW
                 
             
             elif (UPmethod == 'M_SCW1'or UPmethod=='M_SCW2'):
                 self.bias   = options.bias
-                self.Sigma = options.a*np.identity(d);
                 self.C     = options.C;
                 self.phi   = norm.ppf(options.eta)
+                if(self.bias):
+                    self.Sigma = options.a*np.identity(d+1)    # parameter of M_SCW
+                else:
+                    self.Sigma = options.a*np.identity(d)      # parameter of M_SCW
                 
             elif(UPmethod=='NEW_ALGORITHM'):
                 # initialize the parameters of your algorithm...

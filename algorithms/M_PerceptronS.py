@@ -18,6 +18,12 @@ def M_PerceptronS(y_t, x_t, model):
     
     # Initialization
     W = model.W
+    bias  = model.bias
+
+    # Add bias term in feature vector
+    if(bias):
+        x_t = np.concatenate(([1],x_t))
+
 
     # Prediction
     F_t = np.matmul(W,x_t)

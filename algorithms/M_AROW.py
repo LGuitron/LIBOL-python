@@ -28,10 +28,14 @@ def M_AROW(y_t, x_t, model):
     W     = model.W;
     Sigma = model.Sigma;
     r     = model.r;
-    
-    
+    bias  = model.bias
+
     # Reshape x_t to matrix
     x_t = np.reshape(x_t, (1,-1))
+    
+        # Add bias term in feature vector
+    if(bias):
+        x_t = np.concatenate(([[1]],x_t), axis = 1)
     
     #--------------------------------------------------------------------------
     # Prediction

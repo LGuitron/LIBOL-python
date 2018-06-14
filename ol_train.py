@@ -49,15 +49,9 @@ def ol_train(Y, X, options):
     
     
     f_ol = options.method                      # get the name of OL function
-    
-    # Load C module
-    if(f_ol[len(f_ol)-1]=='c'):
-        # Load python module
-        module = imp.load_source( f_ol, './algorithms_c/' + f_ol +'.py')
-        
-    else:
-        # Load python module
-        module = imp.load_source( f_ol, './algorithms/' + f_ol +'.py')
+
+    # Load python module
+    module = imp.load_source( f_ol, './algorithms/' + f_ol +'.py')
     
 
     func = getattr( module, f_ol )
