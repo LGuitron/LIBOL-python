@@ -16,10 +16,11 @@ def AROW(y_t, x_t, model):
     #      l_t:     suffered loss
 
     # Initialization
-    w     = model.w
-    Sigma = model.Sigma
-    r     = model.r
-    bias  = model.bias
+    w           = model.w
+    Sigma       = model.Sigma
+    r           = model.r
+    bias        = model.bias
+    regularizer = model.regularizer
     
     # Reshape x_t to matrix
     x_t = np.reshape(x_t, (1,-1))
@@ -48,4 +49,8 @@ def AROW(y_t, x_t, model):
         
     model.w     = w
     model.Sigma = Sigma
+    
+    if(regularizer is not None):
+        model.w = regularizer.regularize(model.w)
+    
     return (model, hat_y_t, l_t)

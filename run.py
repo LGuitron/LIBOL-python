@@ -1,24 +1,14 @@
 import argparse
 import numpy as np
+from math import floor
 from load_data import load_data
 from init_options import Options
 from ol_train import ol_train
 from CV_algorithm import CV_algorithm
 from arg_check import arg_check
+from handle_parameters import handle_parameters
 
-def demo():
-    # Parser with default options if no arguments are given
-    parser = argparse.ArgumentParser(description='Online learning algorithms selection')
-    parser.add_argument('-t', type=str, help='Classification task (Default bc): {bc, mc} ',dest='task',  default='bc')                # Classification Task
-    parser.add_argument('-a', type=str, help='OL algorithm to run (Default Perceptron):{Perceptron, PA, PA1, PA2, OGD,SOP, CW, SCW, SCW2, AROW}', dest='algorithm', default='Perceptron')                                                                                                            # OL algorithm
-    parser.add_argument('-d', type=str, help='Path to dataset (Default ./data/a7a.t)', dest='path_to_dataset', default='./data/a7a.t')      # dataset
-    parser.add_argument('-f', type=str, help='Input file format (Default libsvm)', dest='file_format',default='libsvm')              # file format
-    args = parser.parse_args()
-
-    task_type = args.task
-    algorithm_name = args.algorithm
-    dataset_name = args.path_to_dataset
-    file_format = args.file_format
+def run(task_type, algorithm_name, dataset_name, file_format, print_trials = True):
 
     return_vals = load_data(dataset_name, file_format, task_type) 
     
@@ -36,42 +26,63 @@ def demo():
     _options = Options(algorithm_name, n, task_type)
 
     # START selecting paramters...
-    _options = CV_algorithm(y, xt, _options)              # auto parameter selection
+    _options = CV_algorithm(y, xt, _options, print_trials)      # auto parameter selection
     # end of paramter selection.
 
     # START generating test ID sequence...
     nb_runs = 20
     ID_list = np.zeros((nb_runs,n))
-    
 
-    
     for i in range (nb_runs):
         ID_list[i]= np.random.permutation(n)
 
 
     # Arrays with algorithm stats
-    err_count_arr = np.zeros(nb_runs)
-    nSV_arr = np.zeros(nb_runs)
-    time_arr = np.zeros(nb_runs)
+    err_count_arr   = np.zeros(nb_runs)
+    nSV_arr         = np.zeros(nb_runs)
+    time_arr        = np.zeros(nb_runs)
+    mistakes_arr    = np.zeros((floor(n/_options.t_tick), nb_runs))
+    nb_SV_cum_arr   = np.zeros((floor(n/_options.t_tick), nb_runs))
+    time_cum_arr    = np.zeros((floor(n/_options.t_tick), nb_runs))
 
     for i in range(nb_runs):
-        print('running on the', i , '-th trial...')
+        if(print_trials):
+            print('running on the', i , '-th trial...')
+
         _options.id_list = ID_list[i]
-        model, result = ol_train(y, xt, _options)
+        model, result = ol_train(y, xt, _options, print_trials)
 
         # Stats for this run
-        run_time, err_count, mistakes, ticks, nb_SV = result
-        err_count_arr[i] = err_count
-        nSV_arr[i]       = len(model.SV)
-        time_arr[i]      = run_time
+        run_time, err_count, mistakes, ticks, nb_SV, captured_t = result
+        err_count_arr[i]  = err_count
+        nSV_arr[i]        = model.final_nb_SV
+        time_arr[i]       = run_time
+        
+        
+        
+        # Algorithm stats after a specific number of updating steps
+        mistakes_arr[:,i]  = mistakes
+        nb_SV_cum_arr[:,i] = nb_SV
+        time_cum_arr[:,i]  = ticks
+        
+
+    mean_error_count  = round(np.mean(err_count_arr)/n, 4)
+    mean_update_count = round(np.mean(nSV_arr), 4)
+    mean_time         = round(np.mean(time_arr),4)
+    mean_mistakes     = np.mean(mistakes_arr, axis = 1)
+
 
     print('-------------------------------------------------------------------------------')
     print('Dataset name: ',dataset_name, '( n=' , n, ' d=' ,xt.shape[1],  ' m=' , len(np.unique(y)), ') \t nb of runs (permutations): ',nb_runs)
     print('-------------------------------------------------------------------------------')
     print('Algorithm: ', algorithm_name)
-    print("mistake rate: " , round(np.mean(err_count_arr)/n, 3), "+/-", round(np.std(err_count_arr)/n,3))
-    print("nb of updates: " , round(np.mean(nSV_arr), 3), "+/-", round(np.std(nSV_arr),3))
-    print("cpu time (seconds): " , round(np.mean(time_arr),3) , "+/-", round(np.std(time_arr),3))
+    print("mistake rate: " , mean_error_count, "+/-", round(np.std(err_count_arr)/n,4))
+    print("nb of updates: " , mean_update_count, "+/-", round(np.std(nSV_arr),4))
+    print("cpu time (seconds): " , mean_time , "+/-", round(np.std(time_arr),4))
     print('-------------------------------------------------------------------------------')
+    
+    return (mean_error_count, mean_update_count, mean_time, np.mean(mistakes_arr, axis=1), np.mean(nb_SV_cum_arr, axis=1), np.mean(time_cum_arr, axis=1), captured_t)
 
-demo()
+if __name__ == '__main__':
+    task_type, algorithm_name, dataset_name, file_format = handle_parameters()
+    run(task_type, algorithm_name, dataset_name, file_format)

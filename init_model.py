@@ -28,6 +28,7 @@ class Model:
             elif (UPmethod == 'PA1' or UPmethod == 'PA2'):
                 self.bias   = options.bias
                 self.C = options.C
+                self.regularizer = options.regularizer
 
             elif (UPmethod == 'ALMA'):
                 self.bias   = options.bias
@@ -36,19 +37,26 @@ class Model:
                 self.p     = options.p           
                 self.C     = options.C
                 self.k_AL  = 1
+                self.regularizer = options.regularizer
                 
             elif (UPmethod == 'OGD'):
                 self.bias        = options.bias
-                self.regularizer = options.regularizer
                 self.t           = options.t            # iteration number
                 self.loss_type   = options.loss_type    # loss type
                 self.C           = options.C
-            
+                self.regularizer = options.regularizer
+
             elif (UPmethod == 'CW'):
                 self.bias   = options.bias
-                self.Sigma = options.a*np.identity(d)
+                
+                if(self.bias):
+                    self.Sigma = options.a*np.identity(d+1)    # parameter of CW
+                else:
+                    self.Sigma = options.a*np.identity(d)      # parameter of CW
+                    
                 self.eta   = options.eta
                 self.phi   = norm.ppf(self.eta)
+                self.regularizer = options.regularizer
             
             elif(UPmethod =='AROW'):
                 self.bias   = options.bias
@@ -57,6 +65,7 @@ class Model:
                     self.Sigma = options.a*np.identity(d+1)    # parameter of AROW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of AROW
+                self.regularizer = options.regularizer
                 
             elif(UPmethod =='SOP'):
                 self.bias   = options.bias
@@ -65,12 +74,14 @@ class Model:
                     self.Sigma = options.a*np.identity(d+1)    # parameter of SOP
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of SOP
-
+                self.regularizer = options.regularizer
+                
             elif (UPmethod == 'IELLIP'):
                 self.bias   = options.bias
                 self.b     = options.b
                 self.c_t   = options.IELLIP_c
                 self.Sigma = options.a*np.identity(d)
+                self.regularizer = options.regularizer
             
             elif (UPmethod == 'SCW'or UPmethod=='SCW2'):
                 self.bias   = options.bias
@@ -83,6 +94,7 @@ class Model:
                 self.C     = options.C;
                 self.eta   = options.eta;
                 self.phi   = norm.ppf(self.eta)             # should use the inverse of normal function
+                self.regularizer = options.regularizer
                 
             elif (UPmethod == 'NAROW'):
                 self.bias   = options.bias
@@ -91,16 +103,18 @@ class Model:
                     self.Sigma = options.a*np.identity(d+1)    # parameter of NAROW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of NAROW
-        
+                self.regularizer = options.regularizer
+                
             elif (UPmethod == 'NHERD'):
                 self.bias   = options.bias
                 self.gamma = 1/options.C;
                 self.Sigma = options.a*np.identity(d) # parameter of NAROW
+                self.regularizer = options.regularizer
                 
             elif(UPmethod=='NEW_ALGORITHM'):
                 # initialize the parameters of your algorithm...
                 self.bias   = options.bias
-        
+                self.regularizer = options.regularizer
             else:
                 print('Unknown method.')
         
@@ -118,18 +132,22 @@ class Model:
             
             if (UPmethod == 'M_PERCEPTRONM' or UPmethod =='M_ROMMA' or UPmethod == 'M_AROMMA'):
                 self.bias   = options.bias
-
+                self.regularizer = options.regularizer
+                
             elif (UPmethod == 'M_PERCEPTRONU' or UPmethod == 'M_PERCEPTRONS'):
                 self.bias   = options.bias
+                self.regularizer = options.regularizer
             
             elif (UPmethod == 'M_PA1' or UPmethod == 'M_PA2' or UPmethod =='M_PA'):
                 self.bias   = options.bias
                 self.C = options.C
+                self.regularizer = options.regularizer
                 
             elif (UPmethod == 'M_OGD'):
                 self.bias   = options.bias
                 self.C   = options.C;          # learning rate parameter
                 self.t   = options.t;          # iteration number
+                self.regularizer = options.regularizer
             
             elif (UPmethod == 'M_CW'):
                 self.bias   = options.bias
@@ -139,7 +157,7 @@ class Model:
                     self.Sigma = options.a*np.identity(d+1)    # parameter of M_SCW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of M_SCW
-        
+                self.regularizer = options.regularizer
         
             elif(UPmethod =='M_AROW'):
                 self.bias   = options.bias
@@ -148,7 +166,7 @@ class Model:
                     self.Sigma = options.a*np.identity(d+1)    # parameter of M_AROW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of M_AROW
-                
+                self.regularizer = options.regularizer
             
             elif (UPmethod == 'M_SCW1'or UPmethod=='M_SCW2'):
                 self.bias   = options.bias
@@ -158,10 +176,11 @@ class Model:
                     self.Sigma = options.a*np.identity(d+1)    # parameter of M_SCW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of M_SCW
+                self.regularizer = options.regularizer
                 
             elif(UPmethod=='NEW_ALGORITHM'):
                 # initialize the parameters of your algorithm...
                 self.bias   = options.bias
-        
+                self.regularizer = options.regularizer
             else:
                 print('Unknown method.')

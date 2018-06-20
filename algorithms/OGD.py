@@ -1,4 +1,5 @@
 import numpy as np
+from  math import log, exp
 def OGD(y_t, x_t, model):
     # OGD: Online Gradient Descent (OGD) algorithms
     #--------------------------------------------------------------------------
@@ -67,5 +68,6 @@ def OGD(y_t, x_t, model):
     model.w = w
     if(regularizer is not None):
         model.w = regularizer.regularize(model.w, learning_rate=eta_t)
+
     model.t = model.t + 1 # iteration counter
     return (model, hat_y_t, l_t)

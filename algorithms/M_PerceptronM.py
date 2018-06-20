@@ -17,9 +17,10 @@ def M_PerceptronM(y_t, x_t, model):
     #      l_t:     suffered loss
     
     # Initialization
-    W = model.W
-    bias  = model.bias
-
+    W           = model.W
+    bias        = model.bias
+    regularizer = model.regularizer
+    
     # Add bias term in feature vector
     if(bias):
         x_t = np.concatenate(([1],x_t))
@@ -40,5 +41,8 @@ def M_PerceptronM(y_t, x_t, model):
         
         model.W[int(y_t),:] = W[int(y_t),:] + x_t
         model.W[s_t,:] = W[s_t,:] - x_t
+    
+    if(regularizer is not None):
+        model.W = regularizer.regularize(model.W)    
 
     return (model, hat_y_t, l_t)

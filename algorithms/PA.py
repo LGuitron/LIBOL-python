@@ -17,9 +17,9 @@ def PA(y_t, x_t, model):
     #      l_t:     suffered loss
 
     # Initialization
-    w     = model.w
-    bias  = model.bias
-
+    w           = model.w
+    bias        = model.bias
+    regularizer = model.regularizer
 
     # Add bias term in feature vector
     if(bias):
@@ -44,4 +44,9 @@ def PA(y_t, x_t, model):
         else:
             gamma_t = 1                  # special case when all x goes zero.
         model.w = w + gamma_t*y_t*x_t
+        
+    # Use regularizer on w
+    if(regularizer is not None):
+        model.w = regularizer.regularize(model.w)
+
     return (model, hat_y_t, l_t)

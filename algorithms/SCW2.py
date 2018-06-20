@@ -16,13 +16,14 @@ def SCW2(y_t, x_t, model):
     #      l_t:     suffered loss
 
     # Initialization
-    w     = model.w
-    Sigma = model.Sigma
-    phi   = model.phi
-    C     = model.C
-    psi   = 1+(phi**2)/2
-    xi    = 1+phi**2
-    bias  = model.bias
+    w           = model.w
+    Sigma       = model.Sigma
+    phi         = model.phi
+    C           = model.C
+    psi         = 1+(phi**2)/2
+    xi          = 1+phi**2
+    bias        = model.bias
+    regularizer = model.regularizer
     
     # Reshape x_t to matrix
     x_t = np.reshape(x_t, (1,-1))
@@ -53,4 +54,10 @@ def SCW2(y_t, x_t, model):
         
     model.w     = w
     model.Sigma = Sigma
+    
+    
+    if(regularizer is not None):
+        model.w = regularizer.regularize(model.w)
+    
+    
     return (model, hat_y_t, l_t)

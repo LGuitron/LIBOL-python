@@ -22,10 +22,11 @@ def M_OGD(y_t, x_t, model):
     #--------------------------------------------------------------------------
     # Initialization
     #--------------------------------------------------------------------------
-    W   = model.W;
-    eta = model.C;         # learning rate
-    bias  = model.bias
-
+    W           = model.W;
+    eta         = model.C;         # learning rate
+    bias        = model.bias
+    regularizer = model.regularizer
+    
     # Add bias term in feature vector
     if(bias):
         x_t = np.concatenate(([1],x_t))
@@ -51,6 +52,9 @@ def M_OGD(y_t, x_t, model):
         model.W[int(y_t),:] = W[int(y_t),:] + eta_t*x_t
         model.W[int(s_t),:] = W[int(s_t),:] - eta_t*x_t
     model.t = model.t + 1 # iteration no
+
+    if(regularizer is not None):
+        model.W = regularizer.regularize(model.W)   
 
     return model, hat_y_t, l_t
     

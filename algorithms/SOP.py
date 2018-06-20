@@ -17,9 +17,10 @@ def SOP(y_t, x_t, model):
     #      l_t:     suffered loss
 
     # Initialization
-    w     = model.w;
-    Sigma = model.Sigma;
-    bias  = model.bias
+    w           = model.w;
+    Sigma       = model.Sigma;
+    bias        = model.bias
+    regularizer = model.regularizer
 
     # Reshape x_t to matrix
     x_t = np.reshape(x_t, (1,-1))
@@ -48,5 +49,8 @@ def SOP(y_t, x_t, model):
         w     +=  y_t*x_t    
     model.w = w
     model.Sigma = Sigma_t
+
+    if(regularizer is not None):
+        model.w = regularizer.regularize(model.w)
 
     return (model, hat_y_t, l_t)
