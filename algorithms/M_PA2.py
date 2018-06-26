@@ -25,7 +25,6 @@ def M_PA2(y_t, x_t, model):
     W           = model.W
     C           = model.C
     bias        = model.bias
-    regularizer = model.regularizer
 
     # Add bias term in feature vector
     if(bias):
@@ -52,9 +51,6 @@ def M_PA2(y_t, x_t, model):
     if (l_t > 0):
         eta_t = l_t/(2*np.linalg.norm(x_t)**2+1/(2*C))
         model.W[int(y_t),:] = W[int(y_t),:] + eta_t*x_t
-        model.W[int(s_t),:] = W[int(s_t),:] - eta_t*x_t
-        
-    if(regularizer is not None):
-        model.W = regularizer.regularize(model.W)           
+        model.W[int(s_t),:] = W[int(s_t),:] - eta_t*x_t           
 
     return model, hat_y_t, l_t

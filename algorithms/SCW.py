@@ -23,7 +23,6 @@ def SCW(y_t, x_t, model):
     psi         = 1+(phi**2)/2
     xi          = 1+phi**2
     bias        = model.bias
-    regularizer = model.regularizer
     
     # Reshape x_t to matrix
     x_t = np.reshape(x_t, (1,-1))
@@ -33,7 +32,6 @@ def SCW(y_t, x_t, model):
         x_t = np.concatenate(([[1]],x_t), axis = 1)
 
     # Prediction
-    #f_t = np.matmul(w,x_t)
     f_t = np.matmul(w,x_t.T)
     if (f_t>=0):
         hat_y_t = 1
@@ -55,10 +53,6 @@ def SCW(y_t, x_t, model):
         
     model.w     = w
     model.Sigma = Sigma
-    
-    
-    if(regularizer is not None):
-        model.w = regularizer.regularize(model.w)
     
     
     return (model, hat_y_t, l_t)

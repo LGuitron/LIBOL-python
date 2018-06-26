@@ -20,7 +20,6 @@ def Perceptron(y_t, x_t, model):
     # Initialization
     w           = model.w
     bias        = model.bias          # Bias for classifier
-    regularizer = model.regularizer   # Regularizer method
     
     # Add bias term in feature vector
     if(bias):
@@ -41,9 +40,5 @@ def Perceptron(y_t, x_t, model):
         w += y_t*x_t                      # Update w with hinge loss derivative
     
     model.w = w
-
-    # Use regularizer on w
-    if(regularizer is not None):
-        model.w = regularizer.regularize(model.w)
 
     return (model, hat_y_t, l_t)

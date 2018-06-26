@@ -19,12 +19,10 @@ def PA2(y_t, x_t, model):
     w           = model.w
     C           = model.C
     bias        = model.bias
-    regularizer = model.regularizer
     
     # Add bias term in feature vector
     if(bias):
         x_t = np.concatenate(([1],x_t))
-    
     
     # Prediction
     f_t = np.dot(w,x_t)
@@ -41,9 +39,5 @@ def PA2(y_t, x_t, model):
         s_t = np.linalg.norm(x_t)**2
         gamma_t = l_t/(s_t+(1/(2*C)))      # PA-II
         model.w = w + gamma_t*y_t*x_t
-
-    # Use regularizer on w
-    if(regularizer is not None):
-        model.w = regularizer.regularize(model.w)
 
     return (model, hat_y_t, l_t)

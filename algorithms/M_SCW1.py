@@ -30,7 +30,6 @@ def M_SCW1(y_t, x_t, model):
     psi         = 1+(phi**2)/2
     xi          = 1+phi**2
     bias        = model.bias
-    regularizer = model.regularizer
     
     # Reshape x_t to matrix
     x_t = np.reshape(x_t, (1,-1))
@@ -65,9 +64,5 @@ def M_SCW1(y_t, x_t, model):
         model.W[int(y_t),:] = W[int(y_t),:] + (alpha_t*np.matmul(Sigma, x_t.T)).T
         model.W[s_t,:]      = W[s_t,:] - (alpha_t*np.matmul(Sigma, x_t.T)).T
         model.Sigma         = Sigma - beta_t*np.matmul(np.matmul(Sigma,x_t.T),np.matmul(x_t, Sigma))
-
-    if(regularizer is not None):
-        model.W = regularizer.regularize(model.W)   
-
 
     return (model, hat_y_t, l_t)

@@ -32,8 +32,11 @@ def plot_w_info(x, y,algorithms, x_name, y_name):
         ax.plot(current_x, current_y, marker=markers[floor(i/len(print_colors))], color=print_colors[i%len(print_colors)], label=algorithm)
         ax.set_xlabel(x_name)
         ax.set_ylabel(y_name)
-
-        legend = ax.legend(loc='upper right', shadow=True)
+        
+        legend = ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.05),
+          ncol=3, fancybox=True, shadow=True)
+        
+        
         frame = legend.get_frame()
         frame.set_facecolor('0.90')
     

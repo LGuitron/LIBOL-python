@@ -19,7 +19,6 @@ def M_PerceptronM(y_t, x_t, model):
     # Initialization
     W           = model.W
     bias        = model.bias
-    regularizer = model.regularizer
     
     # Add bias term in feature vector
     if(bias):
@@ -40,9 +39,6 @@ def M_PerceptronM(y_t, x_t, model):
         s_t       = np.argmax(F_t) 
         
         model.W[int(y_t),:] = W[int(y_t),:] + x_t
-        model.W[s_t,:] = W[s_t,:] - x_t
-    
-    if(regularizer is not None):
-        model.W = regularizer.regularize(model.W)    
+        model.W[s_t,:] = W[s_t,:] - x_t   
 
     return (model, hat_y_t, l_t)
