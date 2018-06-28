@@ -8,7 +8,7 @@ from CV_algorithm import CV_algorithm
 from arg_check import arg_check
 from handle_parameters import handle_parameters
 
-def run(task_type, algorithm_name, dataset_name, file_format, print_trials = True):
+def run(task_type, algorithm_name, dataset_name, file_format, print_trials = True, print_results = True):
 
     return_vals = load_data(dataset_name, file_format, task_type) 
     
@@ -71,15 +71,15 @@ def run(task_type, algorithm_name, dataset_name, file_format, print_trials = Tru
     mean_time         = round(np.mean(time_arr),4)
     mean_mistakes     = np.mean(mistakes_arr, axis = 1)
 
-
-    print('-------------------------------------------------------------------------------')
-    print('Dataset name: ',dataset_name, '( n=' , n, ' d=' ,xt.shape[1],  ' m=' , len(np.unique(y)), ') \t nb of runs (permutations): ',nb_runs)
-    print('-------------------------------------------------------------------------------')
-    print('Algorithm: ', algorithm_name)
-    print("mistake rate: " , mean_error_count, "+/-", round(np.std(err_count_arr)/n,4))
-    print("nb of updates: " , mean_update_count, "+/-", round(np.std(nSV_arr),4))
-    print("cpu time (seconds): " , mean_time , "+/-", round(np.std(time_arr),4))
-    print('-------------------------------------------------------------------------------')
+    if(print_results):
+        print('-------------------------------------------------------------------------------')
+        print('Dataset name: ',dataset_name, '( n=' , n, ' d=' ,xt.shape[1],  ' m=' , len(np.unique(y)), ') \t nb of runs (permutations): ',nb_runs)
+        print('-------------------------------------------------------------------------------')
+        print('Algorithm: ', algorithm_name)
+        print("mistake rate: " , mean_error_count, "+/-", round(np.std(err_count_arr)/n,4))
+        print("nb of updates: " , mean_update_count, "+/-", round(np.std(nSV_arr),4))
+        print("cpu time (seconds): " , mean_time , "+/-", round(np.std(time_arr),4))
+        print('-------------------------------------------------------------------------------')
     
     return (mean_error_count, mean_update_count, mean_time, np.mean(mistakes_arr, axis=1), np.mean(nb_SV_cum_arr, axis=1), np.mean(time_cum_arr, axis=1), captured_t)
 

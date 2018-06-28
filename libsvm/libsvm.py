@@ -10,7 +10,10 @@ def svm_read_problem(data_file_name):
     prob_x = []
     max_ind = 0
     n = 0
-    for line in open(data_file_name):
+    
+    file_object = open(data_file_name)
+    #for line in open(data_file_name):
+    for line in file_object:
         line = line.split(None, 1)
         # In case an instance with all zero features
         if len(line) == 1: line += ['']
@@ -31,5 +34,6 @@ def svm_read_problem(data_file_name):
     for i in range(len(prob_x)):
         for index in prob_x[i]:
             x[i][index-1] = prob_x[i][index]
-
+    
+    file_object.close()
     return (y, x, n)

@@ -29,7 +29,7 @@ def compare(task_type, dataset_name, file_format, showPlot = True):
     run_stats = []
     
     for algorithm_name in algorithms:
-        stats = run(task_type, algorithm_name, dataset_name, file_format, print_trials = False)
+        stats = run(task_type, algorithm_name, dataset_name, file_format, print_trials = False, print_results = True)
         run_stats.append(stats)
     
     if(showPlot):

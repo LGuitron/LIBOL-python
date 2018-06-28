@@ -78,7 +78,7 @@ def CV_algorithm(Y,X,options, print_trials):
 
 def best_parameter_C(Y,X,options, print_trials):
     best_err_count  = X.shape[0]
-    value_domain = 2**np.arange(-4.0,6.0,1.0)
+    value_domain = 2**np.arange(-4.0,4.0,1.0)
 
     for i in range(len(value_domain)):
         options.C       = value_domain[i]

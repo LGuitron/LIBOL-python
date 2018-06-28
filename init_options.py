@@ -40,9 +40,9 @@ class Options:
                 self.t            = 1                              # iteration no, learning rate eta_t = 1/sqrt(t)
                 self.loss_type    = 1                              # type of loss (0, 0-1 loss, 1 - hinge, 2-log, 3-square )
                 self.C            = 1
-                #self.regularizer = None                           # No regularizer
+                self.regularizer = None                            # No regularizer
                 #self.regularizer = L0 (theta = 1.5)               # Coefficient rounding regularizer
-                self.regularizer  = TGD(theta = 1.5, g = 0.025)    # L1 regularizer (gradual decrease of small coefficients)
+                #self.regularizer  = TGD(theta = 1.5, g = 0.025)   # L1 regularizer (gradual decrease of small coefficients)
             
             elif (UPmethod == 'KERNEL_OGD'):
                 self.t            = 1                            # iteration no, learning rate eta_t = 1/sqrt(t)
@@ -102,9 +102,9 @@ class Options:
                 self.bias = True
                 self.t = 1                                         # iteration no, learning rate eta_t = 1/sqrt(t)
                 self.C = 1
-                #self.regularizer = None                           # No regularizer
+                self.regularizer = None                           # No regularizer
                 #self.regularizer = L0 (theta = 1.5)               # Coefficient rounding regularizer
-                self.regularizer  = TGD(theta = 1.5, g = 0.025)    # L1 regularizer (gradual decrease of small coefficients)
+                #self.regularizer  = TGD(theta = 1.5, g = 0.025)    # L1 regularizer (gradual decrease of small coefficients)
 
             elif (UPmethod == 'M_PA' or UPmethod == 'M_PA1' or UPmethod =='M_PA2'):
                 self.bias = True
