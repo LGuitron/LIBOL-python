@@ -38,7 +38,12 @@ end
 l_t = max(0,1-y_t*f_t);
 if (l_t > 0)
     s_t     = norm(x_t)^2;
-    gamma_t = min(C,l_t/s_t); % PA-I
+
+    if (s_t > 0),
+        gamma_t = min(C,l_t/s_t); % PA-I
+    else
+        gamma_t = C; % special case when all x goes zero.
+    end
     w       = w + gamma_t*y_t*x_t;
 end
 model.w = w;

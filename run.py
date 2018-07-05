@@ -8,7 +8,7 @@ from CV_algorithm import CV_algorithm
 from arg_check import arg_check
 from handle_parameters import handle_parameters
 
-def run(task_type, algorithm_name, dataset_name, file_format, print_trials = True, print_results = True):
+def run(task_type, algorithm_name, dataset_name, file_format, print_results = True, bias = True, regularization = True):
 
     return_vals = load_data(dataset_name, file_format, task_type) 
     
@@ -23,10 +23,10 @@ def run(task_type, algorithm_name, dataset_name, file_format, print_trials = Tru
       return
 
     #initializing paramters
-    _options = Options(algorithm_name, n, task_type)
+    _options = Options(algorithm_name, n, task_type, bias = bias, regularization = regularization)
 
     # START selecting paramters...
-    _options = CV_algorithm(y, xt, _options, print_trials)      # auto parameter selection
+    _options = CV_algorithm(y, xt, _options)      # auto parameter selection
     # end of paramter selection.
 
     # START generating test ID sequence...
@@ -46,11 +46,8 @@ def run(task_type, algorithm_name, dataset_name, file_format, print_trials = Tru
     time_cum_arr    = np.zeros((floor(n/_options.t_tick), nb_runs))
 
     for i in range(nb_runs):
-        if(print_trials):
-            print('running on the', i , '-th trial...')
-
         _options.id_list = ID_list[i]
-        model, result = ol_train(y, xt, _options, print_trials)
+        model, result = ol_train(y, xt, _options)
 
         # Stats for this run
         run_time, err_count, mistakes, ticks, nb_SV, captured_t = result

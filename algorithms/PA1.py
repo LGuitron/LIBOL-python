@@ -38,7 +38,10 @@ def PA1(y_t, x_t, model):
     # Update on non-zero loss
     if (l_t > 0):
         s_t = np.linalg.norm(x_t)**2
-        gamma_t = min(C,l_t/s_t)     # (PA-I)
+        if(s_t > 0):
+            gamma_t = min(C,l_t/s_t)     # (PA-I)
+        else:
+            gamma_t = C                  # Special case to avoid making division by 0
         model.w = w + gamma_t*y_t*x_t
     
     return (model, hat_y_t, l_t)

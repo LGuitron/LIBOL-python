@@ -4,7 +4,7 @@ import numpy as np
 import imp
 import time
 
-def ol_train(Y, X, options, print_trials):
+def ol_train(Y, X, options):
 
     # ol_train: the main interface to call an online algorithm for training
     #--------------------------------------------------------------------------
@@ -93,7 +93,4 @@ def ol_train(Y, X, options, print_trials):
     run_time = time.time() - start_time
     result = (run_time, err_count, mistakes, ticks, nb_SV, captured_t)
     model.final_nb_SV = num_SV
-    if(print_trials):
-        print(options.method, 'The cumulative mistake rate = ' , round(100*err_count/n, 4), '% (' , err_count , '/', n , '), CPU time cost: ' , round(run_time,4), "s")
-
     return model, result
