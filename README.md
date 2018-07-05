@@ -8,20 +8,22 @@ customizing these algorithms as needed (regularization, kernel trick, hyperparam
 ## Getting Started
 
 Clone the repository and install the dependencies listed in the file requirements.txt, these dependencies are:
-
+```
 numpy
 oct2py
 nose2
+```
 
-### Run Test
+## Run Test
 
 To verify the correct installation of the Library execute the following command:
 ```
 python run.py
 ```
-This command runs the Perceptron algorithm for the breast_cancer_scale dataset from LIBSMV datasets https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/
+This command runs the Perceptron algorithm for the Breast Cancer Scale dataset from LIBSMV datasets https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/.</br>
 The results of this execution should be somethin like this:
 
+```
 -------------------------------------------------------------------------------
 Dataset name:  ./data/test/bc/breast_cancer_scale.txt ( n= 683  d= 10  m= 2 )    nb of runs (permutations):  20
 -------------------------------------------------------------------------------
@@ -30,7 +32,7 @@ mistake rate:  0.0582 +/- 0.004
 nb of updates:  39.75 +/- 2.7363
 cpu time (seconds):  0.0056 +/- 0.0001
 -------------------------------------------------------------------------------
-
+```
 
 ### Select execution options
 
