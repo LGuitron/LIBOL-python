@@ -41,22 +41,38 @@ the execution of this file requires the following console parameters:
 
 ```
 -a : Algorithm to run, possible options:
-    Perceptron
-    PA
-    PA1
-    PA2
+        Binary Classification  | Multiclass Classification
+        ---------------------- | -------------
+        AROW                   | M_AROW
+        CW                     | M_CW
+        Kernel_OGD             | M_OGD
+        Kernel_Perceptron      | M_PA
+        NAROW                  | M_PA1
+        OGD                    | M_PA2
+        PA                     | M_PerceptronM
+        PA1                    | M_PerceptronS
+        PA2                    | M_PerceptronU
+        Perceptron             | M_SCW1
+        SCW                    | M_SCW2
+        SCW2                   | 
+        SOP                    |
 
+ -d : Path to training dataset
 
+-t : Type of problem to solve, possible options are:
+     bc - Binary Classification
+     mc - Multiclass Classification
+ 
+ -f : File format of input data, formats supported are:
+     libsvm
+
+ -h / --help: Adding this flag displays input information in the command line
 
 ```
-
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+### Examples
 
 ```
-Give the example
+python run.py -a OGD -t bc -d ./data/bc/
 ```
 
 And repeat
@@ -110,13 +126,3 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
