@@ -20,7 +20,7 @@ To verify the correct installation of the Library execute the following command:
 ```
 python run.py
 ```
-This command runs the Perceptron algorithm for the Breast Cancer Scale dataset from LIBSMV datasets https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/.</br>
+This command runs the Perceptron algorithm for the Breast Cancer Scale dataset from LIBSVM datasets https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/.</br>
 The results of this execution should be somethin like this:
 
 ```
@@ -34,13 +34,14 @@ cpu time (seconds):  0.0056 +/- 0.0001
 -------------------------------------------------------------------------------
 ```
 
-### Select execution options
+## Execution Parameters
 
 The main execution of an online learning algorithm is made from the run.py file,
 the execution of this file requires the following console parameters:
 
 ```
 -a : Algorithm to run, possible options:
+
         Binary Classification  | Multiclass Classification
         ---------------------- | -------------
         AROW                   | M_AROW
@@ -69,60 +70,63 @@ the execution of this file requires the following console parameters:
  -h / --help: Adding this flag displays input information in the command line
 
 ```
-### Examples
+## Examples
 
 ```
-python run.py -a OGD -t bc -d ./data/bc/
+python run.py -h
+usage: run.py [-h] [-t TASK] [-a ALGORITHM] [-d PATH_TO_DATASET]
+              [-f FILE_FORMAT]
+
+Online learning algorithms selection
+
+optional arguments:
+  -h, --help          show this help message and exit
+  -t TASK             Classification task (Default bc): {bc, mc}
+  -a ALGORITHM        OL algorithm to run (Default Perceptron):{Perceptron,
+                      PA, PA1, PA2, OGD,SOP, CW, SCW, SCW2, AROW}
+  -d PATH_TO_DATASET  Path to dataset (Default
+                      ./data/test/bc/breast_cancer_scale.txt)
+  -f FILE_FORMAT      Input file format (Default libsvm)
+
+
+python run.py -a OGD -t bc -d ./data/bc/a7a.t -f libsvm
+-------------------------------------------------------------------------------
+Dataset name:  ./data/bc/a7a.t ( n= 16461  d= 123  m= 2 )        nb of runs (permutations):  20
+-------------------------------------------------------------------------------
+Algorithm:  OGD
+mistake rate:  0.2001 +/- 0.0021
+nb of updates:  6962.85 +/- 143.0819
+cpu time (seconds):  0.7073 +/- 0.0024
+-------------------------------------------------------------------------------
+
+python run.py -a M_PA2 -t mc -d ./data/mc/mnist -f libsvm
+-------------------------------------------------------------------------------
+Dataset name:  ./data/mc/mnist ( n= 60000  d= 780  m= 10 )       nb of runs (permutations):  20
+-------------------------------------------------------------------------------
+Algorithm:  M_PA2
+mistake rate:  0.1444 +/- 0.0009
+nb of updates:  23302.65 +/- 77.0086
+cpu time (seconds):  1.913 +/- 0.0531
+-------------------------------------------------------------------------------
+
 ```
+## Test performance vs LIBOL Matlab
 
-And repeat
 
-```
-until finished
-```
 
-End with an example of getting some data out of the system or using it for a little demo
+## Hyperparameter Selection
 
-## Running the tests
+Hyperparameters for many of the algorithms can be setup in the options.py file.
+The variables that can be modified are:
 
-Explain how to run the automated tests for this system
 
-### Break down into end to end tests
 
-Explain what these tests test and why
 
-```
-Give an example
-```
 
-### And coding style tests
 
-Explain what these tests test and why
+## Compare Algorithms and generate Plot
 
-```
-Give an example
-```
 
-## Deployment
 
-Add additional notes about how to deploy this on a live system
 
-## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
