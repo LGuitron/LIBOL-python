@@ -3,7 +3,7 @@
 Library for Online Learning algorithms in Python 3
 This project is based on LIBOL https://github.com/LIBOL/LIBOL by stevenhoi,
 and contains some First Order and Second Order algorithms, as well as options for 
-customizing these algorithms as needed (regularization, kernel trick, hyperparameters, ...)
+customizing these algorithms as needed (regularization, and hyperparameters)
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ To verify the correct installation of the Library execute the following command:
 python run.py
 ```
 This command runs the Perceptron algorithm for the Breast Cancer Scale dataset from LIBSVM datasets https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/.</br>
-The results of this execution should be somethin like this:
+The results of this execution should be something like this:
 
 ```
 -------------------------------------------------------------------------------
@@ -73,22 +73,6 @@ the execution of this file requires the following console parameters:
 ## Examples
 
 ```
-python run.py -h
-usage: run.py [-h] [-t TASK] [-a ALGORITHM] [-d PATH_TO_DATASET]
-              [-f FILE_FORMAT]
-
-Online learning algorithms selection
-
-optional arguments:
-  -h, --help          show this help message and exit
-  -t TASK             Classification task (Default bc): {bc, mc}
-  -a ALGORITHM        OL algorithm to run (Default Perceptron):{Perceptron,
-                      PA, PA1, PA2, OGD,SOP, CW, SCW, SCW2, AROW}
-  -d PATH_TO_DATASET  Path to dataset (Default
-                      ./data/test/bc/breast_cancer_scale.txt)
-  -f FILE_FORMAT      Input file format (Default libsvm)
-
-
 python run.py -a OGD -t bc -d ./data/bc/a7a.t -f libsvm
 -------------------------------------------------------------------------------
 Dataset name:  ./data/bc/a7a.t ( n= 16461  d= 123  m= 2 )        nb of runs (permutations):  20
@@ -112,15 +96,22 @@ cpu time (seconds):  1.913 +/- 0.0531
 ```
 ## Test performance vs LIBOL Matlab
 
+This library is based on LIBOL by stevenhoi.
+For this reason unit tests are provided with the puprose of testing the following:
+*Similar mistake rates when executing algorithms with the same values for hyperparameters
+*Equal or better running time for this library compared to LIBOL Matlab
 
+To run the tests execute the command
+```
+nose2
+```
+This tests run all of the algorithms for both Matlab and Python implementations with the exception of the Kernel Perceptron and Kernel OGD. The files to be tested for binary classification and multiclass classification are located in data/test/bc, and data/test/mc respectively, additional files can be added into these directories if required.
 
 ## Hyperparameter Selection
 
 Hyperparameters for many of the algorithms can be setup in the options.py file.
-The variables that can be modified are:
-
-
-
+Modify this file in order to pick the parameters that work best for a particular dataset.
+The values of the hyperparameters have to be setup per algorithm, and are the following:
 
 
 
