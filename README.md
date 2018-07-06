@@ -36,8 +36,20 @@ cpu time (seconds):  0.0056 +/- 0.0001
 
 ### Select execution options
 
-The main execution of anonline learning algorithm is made from the run.py file,
-the execution of this file requires the following console parameters
+The main execution of an online learning algorithm is made from the run.py file,
+the execution of this file requires the following console parameters:
+
+```
+-a : Algorithm to run, possible options:
+    Perceptron
+    PA
+    PA1
+    PA2
+
+
+
+```
+
 
 A step by step series of examples that tell you how to get a development env running
 
