@@ -12,6 +12,8 @@ Clone the repository and install the dependencies listed in the file requirement
 numpy
 oct2py
 nose2
+six
+Octave
 ```
 
 ## Run Test
@@ -113,7 +115,21 @@ Hyperparameters for many of the algorithms can be setup in the options.py file.
 Modify this file in order to pick the parameters that work best for a particular dataset.
 The values of the hyperparameters have to be setup per algorithm, and are the following:
 
-
+        Binary Classification  | Multiclass Classification
+        ---------------------- | -------------
+        AROW                   | M_AROW
+        CW                     | M_CW
+        Kernel_OGD             | M_OGD
+        Kernel_Perceptron      | M_PA
+        NAROW                  | M_PA1
+        OGD                    | M_PA2
+        PA                     | M_PerceptronM
+        PA1                    | M_PerceptronS
+        PA2                    | M_PerceptronU
+        Perceptron             | M_SCW1
+        SCW                    | M_SCW2
+        SCW2                   | 
+        SOP                    |
 
 ## Compare Algorithms and generate Plot
 
