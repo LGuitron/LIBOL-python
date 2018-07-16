@@ -3,7 +3,7 @@
 Library for Online Learning algorithms in Python 3
 This project is based on LIBOL https://github.com/LIBOL/LIBOL by stevenhoi,
 and contains some First Order and Second Order algorithms, as well as options for 
-customizing these algorithms as needed (regularization, and hyperparameters)
+customizing these algorithms as needed
 
 ## Getting Started
 
@@ -117,18 +117,17 @@ Hyperparameters for many of the algorithms can be setup in the options.py file.
 Modify this file in order to pick the parameters that work best for a particular dataset.
 The values of the hyperparameters have to be setup per algorithm, and are the following:
 
-Parameter   | Type     |                 Description
-------------|----------|------------------------------------------------------------
-bias        | Boolean  | Add bias weight to w
-C           | Float    | Learning Rate / Aggresiveness
-loss_type   | Integer  | Loss function in OGD (0: 0-1 loss, 1: Hinge, 2: Log, 3: Square )
-a           | Float    | Initial value in diagonal matrix for prediction <br> confidence in CW algorithms
-eta         |          |
-NAROW_b     |          |
-regularizer | Function | Function for sparcity regularization (functions in regularizers/Regularizer.py)
-max_sv      | Integer  | Support vectors taken into account in kernel algorithms
-sigma       | Float    | Variance parameterfor Gaussian Kernel
-kernel      | Function | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py)  
+Parameter   | Type        |                 Description
+------------|-------------|------------------------------------------------------------
+bias        | Boolean     | Add bias weight to w
+C           | Float       | Learning Rate / Aggresiveness
+loss_type   | Integer     | Loss function in OGD (0: 0-1 loss, 1: Hinge, 2: Log, 3: Square )
+a           | Float       | Initial value in diagonal matrix for prediction <br> confidence in CW algorithms
+eta         | Probability | Confidence threshold for CW algorithms
+regularizer | Function    | Function for sparcity regularization (functions in regularizers/Regularizer.py)
+max_sv      | Integer     | Support vectors taken into account in kernel algorithms
+sigma       | Float       | Variance parameterfor Gaussian Kernel
+kernel      | Function    | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py)  
 
 ### Binary Classification
 
@@ -139,7 +138,6 @@ kernel      | Function | Kernel method used (gaussian_kernel implemented, <br> a
    loss_type   |            |    |     |     |  X  |    |      |       |     |     |     |                    |      X
    a           |            |    |     |     |     |  X |   X  |   X   |  X  |  X  |  X  |                    |
    eta         |            |    |     |     |     |  X |      |       |     |  X  |  X  |                    |
-   NAROW_b     |            |    |     |     |     |    |      |   X   |     |     |     |                    |
    regularizer |            |    |     |     |  X  |    |      |       |     |     |     |                    |
    max_sv      |            |    |     |     |     |    |      |       |     |     |     |         X          |      X
    sigma       |            |    |     |     |     |    |      |       |     |     |     |         X          |      X
@@ -155,6 +153,14 @@ kernel      | Function | Kernel method used (gaussian_kernel implemented, <br> a
    a           |               |               |               |       |      |       |       |   X  |    X   |    X   |    X
    eta         |               |               |               |       |      |       |       |   X  |    X   |    X   |    
    regularizer |               |               |               |   X   |      |       |       |      |        |        |     
+
+
+### Automatic hyperparameter adjustment
+
+For all algorithms the initial value of the hyperparameters are set in the options.py file.
+If specified, the execution of an algorithm can include a process of hyperparameter tuning in which all parameter values are kept fixed with the exception of one that takes different values from a specified range. After repeating this process with all hyperparameters the best values will be exported to a text file with the name "algorithm_dataset_bestparams.txt", when this process is completed the algorithm will be executed once more with the best values found.
+
+The range of values to be tested for every hyperparameter is represented by lists in the options.py file, modifying these lists might improve the results obtained in some cases.
 
 ## Compare Algorithms and generate Plot
 
