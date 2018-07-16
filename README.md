@@ -43,23 +43,25 @@ the execution of this file requires the following console parameters:
 
 ```
 -a : Algorithm to run, possible options:
+```
 
-        Binary Classification  | Multiclass Classification
-        ---------------------- | -------------------------
-        AROW                   | M_AROW
-        CW                     | M_CW
-        Kernel_OGD             | M_OGD
-        Kernel_Perceptron      | M_PA
-        NAROW                  | M_PA1
-        OGD                    | M_PA2
-        PA                     | M_PerceptronM
-        PA1                    | M_PerceptronS
-        PA2                    | M_PerceptronU
-        Perceptron             | M_SCW1
-        SCW                    | M_SCW2
-        SCW2                   | 
-        SOP                    |
+Binary Classification  | Multiclass Classification
+---------------------- | -------------------------
+AROW                   | M_AROW
+CW                     | M_CW
+Kernel_OGD             | M_OGD
+Kernel_Perceptron      | M_PA
+NAROW                  | M_PA1
+OGD                    | M_PA2
+PA                     | M_PerceptronM
+PA1                    | M_PerceptronS
+PA2                    | M_PerceptronU
+Perceptron             | M_SCW1
+SCW                    | M_SCW2
+SCW2                   | 
+SOP                    |
 
+```
  -d : Path to training dataset
 
 -t : Type of problem to solve, possible options are:
@@ -119,9 +121,7 @@ Parameter | Type     |                 Description
 ----------|----------|------------------------------------------------------------
 bias      | Boolean  | Add bias weight to w
 C         | Float    | Learning Rate / Aggresiveness
-kernel    | Function | Kernel method used (gaussian_kernel implemented,
-          |          | additional kernels can be included in kernels/Kernels.py)    
-
+kernel    | Function | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py)   
 ### Binary Classification
 
               | Perceptron | PA | PA1 | PA2 | OGD | CW | AROW | NAROW | SOP | SCW | SCW2|  Kernel Perceptron | Kernel OGD         
