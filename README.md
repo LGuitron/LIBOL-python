@@ -125,35 +125,9 @@ loss_type   | Integer     | Loss function in OGD (0: 0-1 loss, 1: Hinge, 2: Log,
 a           | Float       | Initial value in diagonal matrix for prediction <br> confidence in CW algorithms
 eta         | Probability | Confidence threshold for CW algorithms
 regularizer | Function    | Function for sparcity regularization (functions in regularizers/Regularizer.py)
-max_sv      | Integer     | Support vectors taken into account in kernel algorithms
-sigma       | Float       | Variance parameterfor Gaussian Kernel
-kernel      | Function    | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py)  
-
-### Binary Classification
-
-   Parameter   | Perceptron | PA | PA1 | PA2 | OGD | CW | AROW | NAROW | SOP | SCW | SCW2|  Kernel Perceptron | Kernel OGD         
- --------------|------------|----|-----|-----|-----|----|------|-------|-----|-----|-----|--------------------|------------ 
-   bias        |      X     | X  |  X  |  X  |  X  |  X |   X  |   X   |  X  |  X  |  X  |                    |
-   C           |            |    |  X  |  X  |  X  |    |   X  |   X   |     |  X  |  X  |                    |      X     
-   loss_type   |            |    |     |     |  X  |    |      |       |     |     |     |                    |      X
-   a           |            |    |     |     |     |  X |   X  |   X   |  X  |  X  |  X  |                    |
-   eta         |            |    |     |     |     |  X |      |       |     |  X  |  X  |                    |
-   regularizer |            |    |     |     |  X  |    |      |       |     |     |     |                    |
-   max_sv      |            |    |     |     |     |    |      |       |     |     |     |         X          |      X
-   sigma       |            |    |     |     |     |    |      |       |     |     |     |         X          |      X
-   kernel      |            |    |     |     |     |    |      |       |     |     |     |         X          |      X 
-   
-
-### Multiclass Classification
-
-   Parameter   | M_PerceptronM | M_PerceptronS | M_PerceptronU | M_OGD | M_PA | M_PA1 | M_PA2 | M_CW | M_SCW1 | M_SCW2 | M_AROW
- --------------|---------------|---------------|---------------|-------|------|-------|-------|------|--------|--------|-------
-   bias        |       X       |        X      |       X       |   X   |   X  |   X   |   X   |   X  |    X   |    X   |    X 
-   C           |               |               |               |   X   |   X  |   X   |   X   |      |    X   |    X   |    X
-   a           |               |               |               |       |      |       |       |   X  |    X   |    X   |    X
-   eta         |               |               |               |       |      |       |       |   X  |    X   |    X   |    
-   regularizer |               |               |               |   X   |      |       |       |      |        |        |     
-
+max_sv      | Integer     | Number of support vectors taken into account in kernel algorithms
+sigma       | Float       | Variance parameter for Gaussian Kernel
+kernel      | Function    | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py) 
 
 ### Automatic hyperparameter adjustment
 
