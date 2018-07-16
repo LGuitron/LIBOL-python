@@ -117,22 +117,44 @@ Hyperparameters for many of the algorithms can be setup in the options.py file.
 Modify this file in order to pick the parameters that work best for a particular dataset.
 The values of the hyperparameters have to be setup per algorithm, and are the following:
 
-Parameter | Type     |                 Description
-----------|----------|------------------------------------------------------------
-bias      | Boolean  | Add bias weight to w
-C         | Float    | Learning Rate / Aggresiveness
-kernel    | Function | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py)  
+Parameter   | Type     |                 Description
+------------|----------|------------------------------------------------------------
+bias        | Boolean  | Add bias weight to w
+C           | Float    | Learning Rate / Aggresiveness
+loss_type   | Integer  | Loss function in OGD (0: 0-1 loss, 1: Hinge, 2: Log, 3: Square )
+a           |          |
+eta         |          |
+NAROW_b     |          |
+regularizer | Function | Function for sparcity regularization (functions in regularizers/Regularizer.py)
+max_sv      | Integer  | Support vectors taken into account in kernel algorithms
+sigma       | Float    | Variance parameterfor Gaussian Kernel
+kernel      | Function | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py)  
 
 ### Binary Classification
 
-   Parameter  | Perceptron | PA | PA1 | PA2 | OGD | CW | AROW | NAROW | SOP | SCW | SCW2|  Kernel Perceptron | Kernel OGD         
- -------------|------------|----|-----|-----|-----|----|------|-------|-----|-----|-----|--------------------|------------ 
-   bias       |      X     | X  |  X  |  X  |  X  |  X |   X  |   X   |  X  |  X  |  X  |                    |
-   C          |            |    |  X  |  X  |  X  |    |   X  |   X   |     |  X  |  X  |                    |      X     
-   kernel     |            |    |     |     |     |    |      |       |     |     |     |         X          |      X 
+   Parameter   | Perceptron | PA | PA1 | PA2 | OGD | CW | AROW | NAROW | SOP | SCW | SCW2|  Kernel Perceptron | Kernel OGD         
+ --------------|------------|----|-----|-----|-----|----|------|-------|-----|-----|-----|--------------------|------------ 
+   bias        |      X     | X  |  X  |  X  |  X  |  X |   X  |   X   |  X  |  X  |  X  |                    |
+   C           |            |    |  X  |  X  |  X  |    |   X  |   X   |     |  X  |  X  |                    |      X     
+   loss_type   |            |    |     |     |  X  |    |      |       |     |     |     |                    |      X
+   a           |            |    |     |     |     |  X |   X  |   X   |  X  |  X  |  X  |                    |
+   eta         |            |    |     |     |     |  X |      |       |     |  X  |  X  |                    |
+   NAROW_b     |            |    |     |     |     |    |      |   X   |     |     |     |                    |
+   regularizer |            |    |     |     |  X  |    |      |       |     |     |     |                    |
+   max_sv      |            |    |     |     |     |    |      |       |     |     |     |         X          |      X
+   sigma       |            |    |     |     |     |    |      |       |     |     |     |         X          |      X
+   kernel      |            |    |     |     |     |    |      |       |     |     |     |         X          |      X 
    
 
+### Multiclass Classification
 
+   Parameter   | M_PerceptronM | M_PerceptronS | M_PerceptronU | M_OGD | M_PA | M_PA1 | M_PA2 | M_CW | M_SCW1 | M_SCW2 | M_AROW
+ --------------|---------------|---------------|---------------|-------|------|-------|-------|------|--------|--------|-------
+   bias        |       X       |        X      |       X       |   X   |   X  |   X   |   X   |   X  |    X   |    X   |    X 
+   C           |               |               |               |   X   |   X  |   X   |   X   |      |    X   |    X   |    X
+   a           |               |               |               |       |      |       |       |   X  |    X   |    X   |    X
+   eta         |               |               |               |       |      |       |       |   X  |    X   |    X   |    
+   regularizer |               |               |               |   X   |      |       |       |      |        |        |     
 
 ## Compare Algorithms and generate Plot
 
