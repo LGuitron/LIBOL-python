@@ -122,7 +122,7 @@ Parameter   | Type     |                 Description
 bias        | Boolean  | Add bias weight to w
 C           | Float    | Learning Rate / Aggresiveness
 loss_type   | Integer  | Loss function in OGD (0: 0-1 loss, 1: Hinge, 2: Log, 3: Square )
-a           |          |
+a           | Float    | Initial value in diagonal matrix for prediction <br> confidence in CW algorithms
 eta         |          |
 NAROW_b     |          |
 regularizer | Function | Function for sparcity regularization (functions in regularizers/Regularizer.py)
