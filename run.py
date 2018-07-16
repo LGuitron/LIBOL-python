@@ -3,12 +3,23 @@ import numpy as np
 from math import floor
 from load_data import load_data
 from init_options import Options
+from test_options import TestOptions
 from ol_train import ol_train
 from CV_algorithm import CV_algorithm
 from arg_check import arg_check
 from handle_parameters import handle_parameters
 
-def run(task_type, algorithm_name, dataset_name, file_format, print_results = True, bias = True, regularization = True):
+def run(task_type, algorithm_name, dataset_name, file_format, print_results = True, test_parameters = False, loss_type = None, tune_params = False):
+    # run: initialize the options for each method
+    #--------------------------------------------------------------------------
+    # INPUT:
+    #       task_type:         type of task (bc or mc)
+    #       algorithm_name     Name of algorithm to be executed
+    #       dataset_name:      Path to dataset used
+    #       file_format:       {libsvm}
+    #       print_results      Show execution results in CLI
+    #       test_parameters    Use parameters equal to LIBOL Matlab for testing purposes
+    #       loss_type          Select different loss_types for OGD for testing purposes
 
     return_vals = load_data(dataset_name, file_format, task_type) 
     
@@ -22,13 +33,30 @@ def run(task_type, algorithm_name, dataset_name, file_format, print_results = Tr
       print("Error: Dataset is not for ", task_type , " task.")
       return
 
-    #initializing paramters
-    _options = Options(algorithm_name, n, task_type, bias = bias, regularization = regularization)
+    # Choose parameters from init_options file
+    if not test_parameters:
 
-    # START selecting paramters...
-    _options = CV_algorithm(y, xt, _options)      # auto parameter selection
-    # end of paramter selection.
+        #initializing paramters
+        _options = Options(algorithm_name, n, task_type)
 
+        # START selecting paramters...
+        _options = CV_algorithm(y, xt, _options)      # auto parameter selection
+        # end of paramter selection.
+    
+    # Choose parameters for testing vs LIBOL MATLAB (no bias and same values as in original implementation in order to test performance)
+    else:
+        
+        #initializing paramters
+        if loss_type is not None:
+            _options = TestOptions(algorithm_name, n, task_type, loss_type)
+        else:
+            _options = TestOptions(algorithm_name, n, task_type)
+        
+        # START selecting paramters...
+        _options = CV_algorithm(y, xt, _options)      # auto parameter selection
+        # end of paramter selection.
+    
+    
     # START generating test ID sequence...
     nb_runs = 20
     ID_list = np.zeros((nb_runs,n))

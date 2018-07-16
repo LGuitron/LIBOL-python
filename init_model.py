@@ -12,7 +12,7 @@ class Model:
         UPmethod = options.method.upper()
         if (options.task_type == 'bc'):
             self.task_type = 'bc'
-            
+
             # Dont add bias on Kernel algorithms, and when explicitly specified
             if (UPmethod == 'KERNEL_PERCEPTRON' or UPmethod == 'KERNEL_OGD' or not options.bias):
                 self.w = np.zeros((1,d))
@@ -32,7 +32,7 @@ class Model:
                 self.sv_num       = 0                            # Number of support vectors added so far
                 self.kernel       = options.kernel               # Kernel method to use
                 self.sigma        = options.sigma                # Hyperparameter for gaussian kernel
-                self.index        = options.index                # Index for budget maintenance
+                self.index        = 0                            # Index for budget maintenance
                 
             elif (UPmethod == 'PA1' or UPmethod == 'PA2'):
                 self.bias   = options.bias
@@ -40,23 +40,23 @@ class Model:
                 
             elif (UPmethod == 'OGD'):
                 self.bias        = options.bias
-                self.t           = options.t            # iteration number
+                self.t           = 1                    # iteration number
                 self.loss_type   = options.loss_type    # loss type
                 self.C           = options.C
                 self.regularizer = options.regularizer
             
             elif (UPmethod == 'KERNEL_OGD'):
-                self.t           = options.t            # iteration number
+                self.t           = 1                    # iteration number
                 self.loss_type   = options.loss_type    # loss type
                 self.C           = options.C
-                
+
                 self.max_sv       = options.max_sv               # Number of instances to keep for kernel approach
                 self.alpha        = np.zeros(self.max_sv)        # Weights corresponding to each of the support vectors
                 self.SV           = np.zeros((self.max_sv,d))    # Support vector array with values of x
                 self.sv_num       = 0                            # Number of support vectors added so far
                 self.kernel       = options.kernel               # Kernel method to use
                 self.sigma        = options.sigma                # Hyperparameter for gaussian kernel
-                self.index        = options.index                # Index for budget maintenance
+                self.index        = 0                            # Index for budget maintenance
                 
             elif (UPmethod == 'CW'):
                 self.bias   = options.bias
@@ -134,7 +134,7 @@ class Model:
             elif (UPmethod == 'M_OGD'):
                 self.bias   = options.bias
                 self.C   = options.C;          # learning rate parameter
-                self.t   = options.t;          # iteration number
+                self.t   = 1;                  # iteration number
                 self.regularizer = options.regularizer
             
             elif (UPmethod == 'M_CW'):

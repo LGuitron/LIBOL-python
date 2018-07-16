@@ -52,7 +52,6 @@ if strcmp(options.task_type, 'bc'),
         case {'SCW','SCW2','SCW_C','SCW2_C'}
             model.Sigma = options.a*eye(d);
             model.C     = options.C;
-            %model.eta   = options.eta;
             model.phi   = norminv(options.eta,0,1);% should use the inverse of normal function
             return;
         case {'NAROW','NAROW_C'}
@@ -91,6 +90,7 @@ elseif strcmp(options.task_type, 'mc'),
             model.Sigma = options.a*eye(d);
             model.eta   = options.eta;
             model.phi   = norminv(options.eta,0,1);% should use the inverse of normal function
+            
             return;
         case {'M_SCW1','M_SCW2','M_SCW1_C','M_SCW2_C'}
             model.Sigma = options.a*eye(d);

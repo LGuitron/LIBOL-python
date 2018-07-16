@@ -40,8 +40,7 @@ def NAROW(y_t, x_t, model):
     v_t = np.matmul(np.matmul(x_t,Sigma), x_t.T)    # confidence
     m_t = y_t*f_t;                                  # margin     
     l_t = 1 - m_t;                                  # hinge loss
-    
-    #l_t = max(0,1-m_t*y_t)                          # hinge loss
+
     if l_t > 0:
         
         chi_t = np.matmul(np.matmul(x_t, Sigma),x_t.T)      # inv(A_{t-1}^{-1})?   

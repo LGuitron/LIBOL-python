@@ -70,8 +70,6 @@ def CV_algorithm(Y,X,options):
         # options = best_paramter_....
         pass
 
-    else:
-        print('Unknown method.');
     return options
 
     

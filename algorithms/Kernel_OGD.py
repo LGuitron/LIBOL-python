@@ -54,37 +54,31 @@ def Kernel_OGD(y_t, x_t, model):
     # 0 - 1 Loss
     if loss_type == 0:
         l_t = (hat_y_t != y_t)          # 0 - correct prediction, 1 - incorrect
-        if(l_t > 0):
-            w += eta_t*y_t*x_t                                   # Update w with hinge loss derivative
 
     # Hinge Loss
     elif loss_type == 1:
         l_t = max(0,1-y_t*f_t) 
-        if(l_t > 0):
-            SV[index]     = x_t                # Add new SV
-            alpha[index]  = y_t                # Update alpha weight for this SV
-            index = (index+1) % max_sv
-
-            # Update weight vector with gradient information
-            gradient = np.zeros(alpha.shape)
-            gradient[0:last_idx] = similarity
-            alpha -= eta_t*gradient
-
-
+        
     # Logistic Loss
     elif loss_type == 2:
         l_t = log(1+exp(-y_t*f_t)) 
-        if(l_t > 0):
-            w += eta_t*y_t*x_t*(1/(1+exp(y_t*f_t)))                                  # Update w with hinge loss derivative
-            
+    
     # Square Loss
     elif loss_type == 3:
         l_t = 0.5*(y_t - f_t)**2  
-        if(l_t > 0):
-            w += -eta_t*(f_t-y_t)*x_t                                 # Update w with hinge loss derivative
     
     else:
         print('Invalid loss type.')
+    
+    if(l_t > 0):
+        SV[index]     = x_t                # Add new SV
+        alpha[index]  = y_t                # Update alpha weight for this SV
+        index = (index+1) % max_sv
+
+        # Update weight vector with gradient information
+        gradient = np.zeros(alpha.shape)
+        gradient[0:last_idx] = similarity
+        alpha -= eta_t*gradient
     
     model.index   = index
     model.sv_num += 1
