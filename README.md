@@ -123,7 +123,7 @@ kernel      | Function    | Kernel method used (gaussian_kernel implemented, <br
 ### Automatic hyperparameter tuning
 
 For all algorithms the initial value of the hyperparameters are set in the options.py file.
-If specified, the execution of an algorithm can include a process of hyperparameter tuning in which all parameter values are kept fixed with the exception of one that takes different values from a specified range. After repeating this process with all hyperparameters the best values will be exported to a text file with the name "algorithm_dataset_bestparams.txt", when this process is completed the algorithm will be executed once more with the best values found.
+If specified, the execution of an algorithm can include a process of hyperparameter tuning in which all parameter values are kept fixed with the exception of one that takes different values from a specified range. After doing this process with all hyperparameters the algorithm will be executed once more with the best values found.
 
 The ranges of values to be tested for every hyperparameter are represented by lists in the options.py file, modify these lists o use any desired ranges of values.
 
@@ -146,4 +146,5 @@ The console parameters that can be set for this comparison are:
 python compare.py -t bc -d ./data/bc/a7a.t -f libsvm
 python compare.py -t mc -d ./data/mc/mnist -f libsvm
 ```
+The algorithms will be executed with the parameter values specified in init_options.py, and the ranges of values specified in CV_algorithm.py
 Running the comparison will display algorithm statistics for all algorithms for the selected task (bc or mc), as well as their corresponding plots comparing their performance in terms of error rate, number of updates, and time of computation.
