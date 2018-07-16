@@ -121,10 +121,11 @@ Parameter | Type     |                 Description
 ----------|----------|------------------------------------------------------------
 bias      | Boolean  | Add bias weight to w
 C         | Float    | Learning Rate / Aggresiveness
-kernel    | Function | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py)   
+kernel    | Function | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py)  
+
 ### Binary Classification
 
-              | Perceptron | PA | PA1 | PA2 | OGD | CW | AROW | NAROW | SOP | SCW | SCW2|  Kernel Perceptron | Kernel OGD         
+   Parameter  | Perceptron | PA | PA1 | PA2 | OGD | CW | AROW | NAROW | SOP | SCW | SCW2|  Kernel Perceptron | Kernel OGD         
  -------------|------------|----|-----|-----|-----|----|------|-------|-----|-----|-----|--------------------|------------ 
    bias       |      X     | X  |  X  |  X  |  X  |  X |   X  |   X   |  X  |  X  |  X  |                    |
    C          |            |    |  X  |  X  |  X  |    |   X  |   X   |     |  X  |  X  |                    |      X     
