@@ -45,7 +45,7 @@ the execution of this file requires the following console parameters:
 -a : Algorithm to run, possible options:
 
         Binary Classification  | Multiclass Classification
-        ---------------------- | -------------
+        ---------------------- | -------------------------
         AROW                   | M_AROW
         CW                     | M_CW
         Kernel_OGD             | M_OGD
@@ -100,14 +100,14 @@ cpu time (seconds):  1.913 +/- 0.0531
 
 This library is based on LIBOL by stevenhoi.
 For this reason unit tests are provided with the puprose of testing the following:
-*Similar mistake rates when executing algorithms with the same values for hyperparameters
-*Equal or better running time for this library compared to LIBOL Matlab
+* Similar mistake rates when executing algorithms with the same values for hyperparameters
+* Equal or better running time for this library compared to LIBOL Matlab
 
 To run the tests execute the command
 ```
 nose2
 ```
-This tests run all of the algorithms for both Matlab and Python implementations with the exception of the Kernel Perceptron and Kernel OGD. The files to be tested for binary classification and multiclass classification are located in data/test/bc, and data/test/mc respectively, additional files can be added into these directories if required.
+This tests run all of the algorithms for both Matlab and Python implementations with the exception of the Kernel Perceptron and Kernel OGD. The files to be tested for binary classification and multiclass classification are located in data/test/bc, and data/test/mc respectively, additional files can be added into these directories for additional testing.
 
 ## Hyperparameter Selection
 
@@ -115,21 +115,23 @@ Hyperparameters for many of the algorithms can be setup in the options.py file.
 Modify this file in order to pick the parameters that work best for a particular dataset.
 The values of the hyperparameters have to be setup per algorithm, and are the following:
 
-        Binary Classification  | Multiclass Classification
-        ---------------------- | -------------
-        AROW                   | M_AROW
-        CW                     | M_CW
-        Kernel_OGD             | M_OGD
-        Kernel_Perceptron      | M_PA
-        NAROW                  | M_PA1
-        OGD                    | M_PA2
-        PA                     | M_PerceptronM
-        PA1                    | M_PerceptronS
-        PA2                    | M_PerceptronU
-        Perceptron             | M_SCW1
-        SCW                    | M_SCW2
-        SCW2                   | 
-        SOP                    |
+Parameter | Type     |                 Description
+----------|----------|------------------------------------------------------------
+bias      | Boolean  | Add bias weight to w
+C         | Float    | Learning Rate / Aggresiveness
+kernel    | Function | Kernel method used (gaussian_kernel implemented,
+          |          | additional kernels can be included in kernels/Kernels.py)    
+
+### Binary Classification
+
+              | Perceptron | PA | PA1 | PA2 | OGD | CW | AROW | NAROW | SOP | SCW | SCW2|  Kernel Perceptron | Kernel OGD         
+ -------------|------------|----|-----|-----|-----|----|------|-------|-----|-----|-----|--------------------|------------ 
+   bias       |      X     | X  |  X  |  X  |  X  |  X |   X  |   X   |  X  |  X  |  X  |                    |
+   C          |            |    |  X  |  X  |  X  |    |   X  |   X   |     |  X  |  X  |                    |      X     
+   kernel     |            |    |     |     |     |    |      |       |     |     |     |         X          |      X 
+   
+
+
 
 ## Compare Algorithms and generate Plot
 
