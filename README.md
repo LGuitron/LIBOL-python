@@ -5,6 +5,25 @@ This project is based on LIBOL https://github.com/LIBOL/LIBOL by stevenhoi,
 and contains some First Order and Second Order algorithms, as well as options for 
 customizing these algorithms as needed
 
+## Algorithms
+
+Binary Classification  | Multiclass Classification
+---------------------- | -------------------------
+AROW                   | M_AROW
+CW                     | M_CW
+Kernel_OGD             | M_OGD
+Kernel_Perceptron      | M_PA
+NAROW                  | M_PA1
+OGD                    | M_PA2
+PA                     | M_PerceptronM
+PA1                    | M_PerceptronS
+PA2                    | M_PerceptronU
+Perceptron             | M_SCW1
+SCW                    | M_SCW2
+SCW2                   | 
+SOP                    |
+
+
 ## Getting Started
 
 Clone the repository and install the dependencies listed in the file requirements.txt, these dependencies are:
@@ -42,26 +61,8 @@ The main execution of an online learning algorithm is made from the run.py file,
 the execution of this file requires the following console parameters:
 
 ```
--a : Algorithm to run, possible options:
-```
+-a : Algorithm to run (see table above)
 
-Binary Classification  | Multiclass Classification
----------------------- | -------------------------
-AROW                   | M_AROW
-CW                     | M_CW
-Kernel_OGD             | M_OGD
-Kernel_Perceptron      | M_PA
-NAROW                  | M_PA1
-OGD                    | M_PA2
-PA                     | M_PerceptronM
-PA1                    | M_PerceptronS
-PA2                    | M_PerceptronU
-Perceptron             | M_SCW1
-SCW                    | M_SCW2
-SCW2                   | 
-SOP                    |
-
-```
  -d : Path to training dataset
 
 -t : Type of problem to solve, possible options are:
@@ -92,24 +93,20 @@ nb of updates:  6962.85 +/- 143.0819
 cpu time (seconds):  0.7073 +/- 0.0024
 -------------------------------------------------------------------------------
 ```
-## Test performance vs LIBOL Matlab
+## Tests
 
-This library is based on LIBOL by stevenhoi.
-For this reason unit tests are provided with the puprose of testing the following:
-* Similar mistake rates when executing algorithms with the same values for hyperparameters
-* Equal or better running time for this library compared to LIBOL Matlab
+Tests are included in this library with the purpose of comparing execution time and performance of algorithms with the ones implemented in LIBOL by stevenhoi.
+These tests also allow quick verification of the functionality of elements in the library.
 
 To run the tests execute the command
 ```
 nose2
 ```
-This tests run all of the algorithms for both Matlab and Python implementations with the exception of the Kernel Perceptron and Kernel OGD. The files to be tested for binary classification and multiclass classification are located in data/test/bc, and data/test/mc respectively, additional files can be added into these directories for additional testing.
 
 ## Hyperparameter Selection
 
 Hyperparameters for many of the algorithms can be setup in the options.py file.
 Modify this file in order to pick the parameters that work best for a particular dataset.
-The values of the hyperparameters have to be setup per algorithm, and are the following:
 
 Parameter   | Type        |                 Description
 ------------|-------------|------------------------------------------------------------
@@ -128,7 +125,7 @@ kernel      | Function    | Kernel method used (gaussian_kernel implemented, <br
 For all algorithms the initial value of the hyperparameters are set in the options.py file.
 If specified, the execution of an algorithm can include a process of hyperparameter tuning in which all parameter values are kept fixed with the exception of one that takes different values from a specified range. After repeating this process with all hyperparameters the best values will be exported to a text file with the name "algorithm_dataset_bestparams.txt", when this process is completed the algorithm will be executed once more with the best values found.
 
-The ranges of values to be tested for every hyperparameter are represented by lists in the options.py file, modifying these lists might improve the results obtained in some cases.
+The ranges of values to be tested for every hyperparameter are represented by lists in the options.py file, modify these lists o use any desired ranges of values.
 
 ## Compare Algorithms and generate Plot
 
