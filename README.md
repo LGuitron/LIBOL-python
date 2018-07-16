@@ -74,10 +74,15 @@ SOP                    |
  -h / --help: Adding this flag displays input information in the command line
 
 ```
-## Examples
+### Input Examples
 
 ```
 python run.py -a OGD -t bc -d ./data/bc/a7a.t -f libsvm
+python run.py -a M_PA2 -t mc -d ./data/mc/mnist -f libsvm
+
+```
+### Output Example
+```
 -------------------------------------------------------------------------------
 Dataset name:  ./data/bc/a7a.t ( n= 16461  d= 123  m= 2 )        nb of runs (permutations):  20
 -------------------------------------------------------------------------------
@@ -86,17 +91,6 @@ mistake rate:  0.2001 +/- 0.0021
 nb of updates:  6962.85 +/- 143.0819
 cpu time (seconds):  0.7073 +/- 0.0024
 -------------------------------------------------------------------------------
-
-python run.py -a M_PA2 -t mc -d ./data/mc/mnist -f libsvm
--------------------------------------------------------------------------------
-Dataset name:  ./data/mc/mnist ( n= 60000  d= 780  m= 10 )       nb of runs (permutations):  20
--------------------------------------------------------------------------------
-Algorithm:  M_PA2
-mistake rate:  0.1444 +/- 0.0009
-nb of updates:  23302.65 +/- 77.0086
-cpu time (seconds):  1.913 +/- 0.0531
--------------------------------------------------------------------------------
-
 ```
 ## Test performance vs LIBOL Matlab
 
@@ -129,16 +123,30 @@ max_sv      | Integer     | Number of support vectors taken into account in kern
 sigma       | Float       | Variance parameter for Gaussian Kernel
 kernel      | Function    | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py) 
 
-### Automatic hyperparameter adjustment
+### Automatic hyperparameter tuning
 
 For all algorithms the initial value of the hyperparameters are set in the options.py file.
 If specified, the execution of an algorithm can include a process of hyperparameter tuning in which all parameter values are kept fixed with the exception of one that takes different values from a specified range. After repeating this process with all hyperparameters the best values will be exported to a text file with the name "algorithm_dataset_bestparams.txt", when this process is completed the algorithm will be executed once more with the best values found.
 
-The range of values to be tested for every hyperparameter is represented by lists in the options.py file, modifying these lists might improve the results obtained in some cases.
+The ranges of values to be tested for every hyperparameter are represented by lists in the options.py file, modifying these lists might improve the results obtained in some cases.
 
 ## Compare Algorithms and generate Plot
 
+Algorithms are compared based on the task that they are able to perform (binary classification or multiclass classification)
+The console parameters that can be set for this comparison are:
 
+ -d : Path to training dataset
 
+-t : Type of problem to solve, possible options are:
+     bc - Binary Classification
+     mc - Multiclass Classification
+ 
+ -f : File format of input data, formats supported are:
+     libsvm
 
-
+### Input Examples
+```
+python compare.py -t bc -d ./data/bc/a7a.t -f libsvm
+python compare.py -t mc -d ./data/mc/mnist -f libsvm
+```
+Running the comparison will display algorithm statistics for all algorithms for the selected task (bc or mc), as well as their corresponding plots comparing their performance in terms of error rate, number of updates, and time of computation.
