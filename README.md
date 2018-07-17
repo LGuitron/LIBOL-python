@@ -152,3 +152,6 @@ Running the comparison will display algorithm statistics for all algorithms for 
 ### Output Example
 #### Binary Classification
 ![alt text](https://github.com/LGuitron/LIBOL-python/blob/master/results/bc_plot_error_rate.png)
+
+#### Multiclass Classification
+![alt text](https://github.com/LGuitron/LIBOL-python/blob/master/results/mc_plot_error_rate.png)
