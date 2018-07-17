@@ -150,3 +150,5 @@ The algorithms will be executed with the parameter values specified in init_opti
 Running the comparison will display algorithm statistics for all algorithms for the selected task (bc or mc), as well as their corresponding plots comparing their performance in terms of error rate, number of updates, and time of computation.
 
 ### Output Example
+#### Binary Classification
+![alt text](https://github.com/LGuitron/LIBOL-python/blob/master/results/bc_plot_error_rate.png)
