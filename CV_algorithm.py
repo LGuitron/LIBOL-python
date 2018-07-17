@@ -76,7 +76,7 @@ def CV_algorithm(Y,X,options):
 
 def best_parameter_C(Y,X,options):
     best_err_count  = X.shape[0]
-    value_domain = 2**np.arange(-4.0,4.0,1.0)
+    value_domain = options.range_C
 
     for i in range(len(value_domain)):
         options.C       = value_domain[i]
@@ -92,7 +92,7 @@ def best_parameter_C(Y,X,options):
 
 def best_parameter_eta(Y,X,options):
     best_err_count  = X.shape[0]
-    value_domain = np.arange(0.55,0.95,0.05)
+    value_domain = options.range_eta
     
     for i in range(len(value_domain)):
         options.eta       = value_domain[i]
@@ -107,7 +107,7 @@ def best_parameter_eta(Y,X,options):
 
 def best_parameter_b(Y,X,options):
     best_err_count  = X.shape[0]
-    value_domain = np.arange(0.1,0.9,0.1)
+    value_domain = options.range_b
     
     for i in range(len(value_domain)):
         options.b       = value_domain[i]
@@ -122,7 +122,7 @@ def best_parameter_b(Y,X,options):
 
 def best_parameter_p(Y,X,options):
     best_err_count  = X.shape[0]
-    value_domain = np.arange(2,10,2)
+    value_domain = options.range_p
     
     for i in range(len(value_domain)):
         options.p       = value_domain[i]

@@ -32,7 +32,7 @@ def compare(task_type, dataset_name, file_format, showPlot = True):
         run_stats.append(stats)
     
     if(showPlot):
-        plot(algorithms, run_stats)
+        plot(algorithms, run_stats, dataset_name)
         
     return run_stats
 

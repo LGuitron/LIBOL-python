@@ -120,3 +120,8 @@ class TestOptions:
 
             elif (UPmethod == 'NEW_ALGORITHM'):
                 pass
+        
+        self.range_C   = 2**np.arange(-4.0,4.0,1.0)
+        self.range_eta = np.arange(0.55,0.95,0.05)
+        self.range_b   = np.arange(0.1,0.9,0.1)
+        self.range_p   = np.arange(2,10,2)
