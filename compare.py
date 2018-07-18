@@ -15,7 +15,7 @@ def compare(task_type, dataset_name, file_format, showPlot = True):
     #   run_experiment_bc('sonar','arff','m')
 
     if task_type == 'bc':
-        algorithms = ['Perceptron','Kernel_Perceptron', 'PA','PA1','PA2','OGD','Kernel_OGD','SOP','CW','SCW','SCW2','AROW','NAROW']
+        algorithms = ['Perceptron','Gaussian_Kernel_Perceptron', 'Poly_Kernel_Perceptron', 'PA','PA1','PA2','OGD','Gaussian_Kernel_OGD','SOP','CW','SCW','SCW2','AROW','NAROW']
     
     elif task_type == 'mc':
         algorithms = ['M_PerceptronM','M_PerceptronS','M_PerceptronU','M_PA','M_PA1','M_PA2','M_OGD','M_CW','M_SCW1','M_SCW2','M_AROW']

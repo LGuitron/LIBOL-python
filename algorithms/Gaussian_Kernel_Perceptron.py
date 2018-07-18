@@ -1,6 +1,6 @@
 import numpy as np
 
-def Kernel_Perceptron(y_t, x_t, model):
+def Gaussian_Kernel_Perceptron(y_t, x_t, model):
 
     # KernelPerceptron: Non-linear perceptron algorithm by using the kernel trick
     # --------------------------------------------------------------------------
@@ -31,7 +31,6 @@ def Kernel_Perceptron(y_t, x_t, model):
     last_idx = min(sv_num, max_sv)
     if sv_num != 0:
         f_t = np.dot(alpha[0:last_idx] ,kernel(SV, x_t, sigma, last_idx))
-
     # Make prediction value = 0 when no SVs
     else:
         f_t = 0

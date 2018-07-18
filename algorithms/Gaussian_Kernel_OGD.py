@@ -1,6 +1,6 @@
 import numpy as np
 from  math import log, exp
-def Kernel_OGD(y_t, x_t, model):
+def Gaussian_Kernel_OGD(y_t, x_t, model):
     # Kernel_OGD: Online Gradient Descent (OGD) algorithms
     #--------------------------------------------------------------------------
     # Reference:

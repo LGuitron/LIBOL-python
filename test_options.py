@@ -29,10 +29,14 @@ class TestOptions:
             if (UPmethod == 'PERCEPTRON' or UPmethod =='PA'):
                 self.bias         = False
             
-            elif (UPmethod == 'KERNEL_PERCEPTRON'):
+            elif (UPmethod == 'GAUSSIAN_KERNEL_PERCEPTRON'):
                 self.max_sv       = 100                          # Number of instances to keep for kernel approach                 
                 self.kernel       = gaussian_kernel              # Kernel method
                 self.sigma        = 1                            # Hyperparameter to use in gaussian_kernel
+            
+            elif (UPmethod == 'POLY_KERNEL_PERCEPTRON'):
+                self.bias   = True
+                self.degree = 2
             
             elif (UPmethod =='PA1' or UPmethod =='PA2'):
                 self.bias         = False
@@ -43,7 +47,7 @@ class TestOptions:
                 self.C            = 1
                 self.regularizer = None                            # No regularizer
             
-            elif (UPmethod == 'KERNEL_OGD'):
+            elif (UPmethod == 'GAUSSIAN_KERNEL_OGD'):
                 self.C            = 1
                 self.max_sv       = 100                          # Number of instances to keep for kernel approach                 
                 self.kernel       = gaussian_kernel              # Kernel method

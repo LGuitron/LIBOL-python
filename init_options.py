@@ -2,6 +2,7 @@ import numpy as np
 from regularizers.Regularizer import L0
 from regularizers.Regularizer import TGD
 from kernels.Kernels import gaussian_kernel
+from kernels.Kernels import Polynomial_Kernel
 import numpy as np
 
 class Options:
@@ -33,10 +34,15 @@ class Options:
             if (UPmethod == 'PERCEPTRON' or UPmethod =='PA'):
                 self.bias = True
             
-            elif (UPmethod == 'KERNEL_PERCEPTRON'):
-                self.max_sv       = 100                          # Number of instances to keep for kernel approach                 
-                self.kernel       = gaussian_kernel              # Kernel method
-                self.sigma        = 1                            # Hyperparameter to use in gaussian_kernel
+            elif (UPmethod == 'GAUSSIAN_KERNEL_PERCEPTRON'):
+                self.max_sv       = 100                             # Number of instances to keep for kernel approach                 
+                self.kernel       = gaussian_kernel                 # Kernel method
+                self.sigma        = 1                               # Hyperparameter to use in gaussian_kernel
+            
+            
+            elif (UPmethod == 'POLY_KERNEL_PERCEPTRON'):
+                self.bias   = True
+                self.degree = 2
             
             elif (UPmethod =='PA1' or UPmethod =='PA2'):
                 self.bias = True
@@ -50,8 +56,8 @@ class Options:
                 #self.regularizer = L0 (theta = 1.5)               # Coefficient rounding regularizer
                 self.regularizer  = TGD(theta = 1.5, g = 0.025)    # L1 regularizer (gradual decrease of small coefficients)
             
-            elif (UPmethod == 'KERNEL_OGD'):
-                self.loss_type    = 1                            # type of loss (0, 0-1 loss, 1 - hinge, 2-log, 3-square )
+            elif (UPmethod == 'GAUSSIAN_KERNEL_OGD'):
+                self.loss_type    = 1                           # type of loss (0, 0-1 loss, 1 - hinge, 2-log, 3-square )
                 self.C            = 1
                 self.max_sv       = 100                          # Number of instances to keep for kernel approach                 
                 self.kernel       = gaussian_kernel              # Kernel method

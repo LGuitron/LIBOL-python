@@ -18,8 +18,8 @@ class LIBOLtests(unittest.TestCase):
         # Algorithms in both LIBOL & LIBOL_py
         self.common_algorithms_bc = ['Perceptron','PA','PA1','PA2','OGD','SOP','CW','SCW','SCW2','AROW','NAROW'] 
         self.common_algorithms_mc = ['M_AROW','M_CW','M_OGD','M_PA','M_PA1','M_PA2','M_PerceptronM','M_PerceptronS','M_PerceptronU','M_SCW1','M_SCW2'] 
-        self.kernel_algorithms    = ['Kernel_Perceptron', 'Kernel_OGD']
-        self.OGD_algorithms       = ['OGD', 'Kernel_OGD']
+        self.kernel_algorithms    = ['Gaussian_Kernel_Perceptron', 'Poly_Kernel_Perceptron', 'Gaussian_Kernel_OGD']
+        self.OGD_algorithms       = ['OGD', 'Gaussian_Kernel_OGD']
         
         # Compile octave modules
         print("\nCompiling modules for Octave \n")

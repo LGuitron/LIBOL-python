@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import norm
+from sklearn import preprocessing as pp
 
 class Model:
 
@@ -13,8 +14,13 @@ class Model:
         if (options.task_type == 'bc'):
             self.task_type = 'bc'
 
-            # Dont add bias on Kernel algorithms, and when explicitly specified
-            if (UPmethod == 'KERNEL_PERCEPTRON' or UPmethod == 'KERNEL_OGD' or not options.bias):
+
+            # Don't add weight vector for kernel algorithms
+            if (UPmethod == 'GAUSSIAN_KERNEL_PERCEPTRON' or UPmethod == 'GAUSSIAN_KERNEL_OGD' or UPmethod == 'POLY_KERNEL_PERCEPTRON'):
+                pass
+
+            # Dont add bias when explicitly specified
+            elif (not options.bias):
                 self.w = np.zeros((1,d))
             
             # Add bias otherwise
@@ -25,7 +31,7 @@ class Model:
                 self.bias        = options.bias
             
             
-            elif (UPmethod == 'KERNEL_PERCEPTRON'):
+            elif (UPmethod == 'GAUSSIAN_KERNEL_PERCEPTRON'):
                 self.max_sv       = options.max_sv                # Number of instances to keep for kernel approach
                 self.alpha        = np.zeros(self.max_sv)        # Weights corresponding to each of the support vectors
                 self.SV           = np.zeros((self.max_sv,d))    # Support vector array with values of x
@@ -34,6 +40,11 @@ class Model:
                 self.sigma        = options.sigma                # Hyperparameter for gaussian kernel
                 self.index        = 0                            # Index for budget maintenance
                 
+            
+            elif (UPmethod == 'POLY_KERNEL_PERCEPTRON'):
+                self.poly   = pp.PolynomialFeatures(degree = options.degree, include_bias = options.bias)
+                self.w      = np.zeros(self.poly.fit_transform(np.zeros((1,d))).shape)
+            
             elif (UPmethod == 'PA1' or UPmethod == 'PA2'):
                 self.bias   = options.bias
                 self.C = options.C
@@ -45,7 +56,7 @@ class Model:
                 self.C           = options.C
                 self.regularizer = options.regularizer
             
-            elif (UPmethod == 'KERNEL_OGD'):
+            elif (UPmethod == 'GAUSSIAN_KERNEL_OGD'):
                 self.t           = 1                    # iteration number
                 self.loss_type   = options.loss_type    # loss type
                 self.C           = options.C
