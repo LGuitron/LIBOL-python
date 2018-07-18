@@ -19,10 +19,17 @@ def Perceptron(y_t, x_t, model):
     
     # Initialization
     w           = model.w
-    bias        = model.bias          # Bias for classifier
+    bias        = model.bias                # Bias for classifier
+    degree      = model.p_kernel_degree     # Polynomial kernel degree
+
+    # Transform input vector
+    if(degree > 1):
+        poly = model.poly
+        x_t = np.reshape(x_t, (1,-1))       # Reshape x_t to matrix
+        x_t  = poly.fit_transform(x_t).T    # Polynomial feature mapping for x_t
     
-    # Add bias term in feature vector
-    if(bias):
+    # Add bias term in feature vector if no preprocessing was required
+    elif(bias):
         x_t = np.concatenate(([1],x_t))
     
     # Prediction
@@ -37,7 +44,10 @@ def Perceptron(y_t, x_t, model):
 
     # Update on wrong predictions
     if(l_t > 0):
-        w += y_t*x_t                      # Update w with hinge loss derivative
+        if(degree > 1):
+            w += (y_t*x_t).T              # Update w with hinge loss derivative
+        else:
+            w += y_t*x_t                  # Update w with hinge loss derivative
     
     model.w = w
 

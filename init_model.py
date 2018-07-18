@@ -9,15 +9,20 @@ class Model:
     #  options:     method name and setting
     #        d:     data dimensionality
     # nb_class:     number of class labels
-        
+
         UPmethod = options.method.upper()
         if (options.task_type == 'bc'):
             self.task_type = 'bc'
 
-
             # Don't add weight vector for kernel algorithms
-            if (UPmethod == 'GAUSSIAN_KERNEL_PERCEPTRON' or UPmethod == 'GAUSSIAN_KERNEL_OGD' or UPmethod == 'POLY_KERNEL_PERCEPTRON'):
+            if (UPmethod == 'GAUSSIAN_KERNEL_PERCEPTRON' or UPmethod == 'GAUSSIAN_KERNEL_OGD'):
                 pass
+
+            
+            # Set weight vector size depending on polynomial feature map
+            elif (options.p_kernel_degree > 1):
+                self.poly = pp.PolynomialFeatures(degree = options.p_kernel_degree , include_bias = options.bias)
+                self.w    = np.zeros(self.poly.fit_transform(np.zeros((1,d))).shape) 
 
             # Dont add bias when explicitly specified
             elif (not options.bias):
@@ -28,7 +33,9 @@ class Model:
                 self.w = np.zeros((1,d+1))
             
             if (UPmethod == 'PERCEPTRON' or UPmethod == 'PA'):
-                self.bias        = options.bias
+                self.bias            = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
+                
             
             
             elif (UPmethod == 'GAUSSIAN_KERNEL_PERCEPTRON'):
@@ -39,11 +46,6 @@ class Model:
                 self.kernel       = options.kernel               # Kernel method to use
                 self.sigma        = options.sigma                # Hyperparameter for gaussian kernel
                 self.index        = 0                            # Index for budget maintenance
-                
-            
-            elif (UPmethod == 'POLY_KERNEL_PERCEPTRON'):
-                self.poly   = pp.PolynomialFeatures(degree = options.degree, include_bias = options.bias)
-                self.w      = np.zeros(self.poly.fit_transform(np.zeros((1,d))).shape)
             
             elif (UPmethod == 'PA1' or UPmethod == 'PA2'):
                 self.bias   = options.bias

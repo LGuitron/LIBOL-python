@@ -21,22 +21,19 @@ class TestOptions:
         self.task_type = task_type
         self.id_list   = np.random.permutation(n)
         self.loss_type = loss_type                  # Loss type for OGD passed in constructor 
-        
+        self.p_kernel_degree = 1  
+
         UPmethod = method.upper()
         
         if (task_type == 'bc'):
             
             if (UPmethod == 'PERCEPTRON' or UPmethod =='PA'):
-                self.bias         = False
+                self.bias            = False                      # Input Preprocesing to be applied 
             
             elif (UPmethod == 'GAUSSIAN_KERNEL_PERCEPTRON'):
                 self.max_sv       = 100                          # Number of instances to keep for kernel approach                 
                 self.kernel       = gaussian_kernel              # Kernel method
                 self.sigma        = 1                            # Hyperparameter to use in gaussian_kernel
-            
-            elif (UPmethod == 'POLY_KERNEL_PERCEPTRON'):
-                self.bias   = True
-                self.degree = 2
             
             elif (UPmethod =='PA1' or UPmethod =='PA2'):
                 self.bias         = False
