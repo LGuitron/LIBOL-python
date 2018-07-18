@@ -19,9 +19,16 @@ def M_PerceptronU(y_t, x_t, model):
     # Initialization
     W = model.W
     bias  = model.bias
-    
+    degree      = model.p_kernel_degree     # Polynomial kernel degree
+
+    # Transform input vector
+    if(degree > 1):
+        poly = model.poly
+        x_t = np.reshape(x_t, (1,-1))       # Reshape x_t to matrix
+        x_t  = poly.fit_transform(x_t).T      # Polynomial feature mapping for x_t
+
     # Add bias term in feature vector
-    if(bias):
+    elif(bias):
         x_t = np.concatenate(([1],x_t))
 
 
@@ -36,11 +43,23 @@ def M_PerceptronU(y_t, x_t, model):
     # Making update
     l_t = hat_y_t != y_t             # 0 - correct prediction, 1 - incorrect
     if (l_t > 0):
-        model.W[int(y_t),:] = W[int(y_t),:] + x_t
+        
+        if degree > 1:
+            model.W[int(y_t),:] = W[int(y_t),:] + x_t[:,0]
+        else:
+            model.W[int(y_t),:] = W[int(y_t),:] + x_t
         
         if norm_E > 0:
             for i in range(norm_E):
                 s_t = E[i]
-                model.W[s_t,:] = W[s_t,:] - (1/norm_E)*x_t 
+                
+                if degree > 1:
+                    model.W[s_t,:] = W[s_t,:] - (1/norm_E)*x_t[:,0] 
+                else:
+                    model.W[s_t,:] = W[s_t,:] - (1/norm_E)*x_t
+                
+                
+                
+                #model.W[s_t,:] = W[s_t,:] - (1/norm_E)*x_t 
 
     return (model, hat_y_t, l_t)

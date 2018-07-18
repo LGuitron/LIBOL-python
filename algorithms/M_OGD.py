@@ -26,9 +26,16 @@ def M_OGD(y_t, x_t, model):
     eta         = model.C;         # learning rate
     bias        = model.bias
     regularizer = model.regularizer
-    
+    degree      = model.p_kernel_degree     # Polynomial kernel degree
+
+    # Transform input vector
+    if(degree > 1):
+        poly = model.poly
+        x_t = np.reshape(x_t, (1,-1))       # Reshape x_t to matrix
+        x_t  = poly.fit_transform(x_t).T      # Polynomial feature mapping for x_t
+        
     # Add bias term in feature vector
-    if(bias):
+    elif(bias):
         x_t = np.concatenate(([1],x_t))
     
     #--------------------------------------------------------------------------
@@ -49,8 +56,12 @@ def M_OGD(y_t, x_t, model):
     #--------------------------------------------------------------------------
     if (l_t > 0):
         eta_t   = eta/np.sqrt(model.t)
-        model.W[int(y_t),:] = W[int(y_t),:] + eta_t*x_t
-        model.W[int(s_t),:] = W[int(s_t),:] - eta_t*x_t
+        if degree > 1:
+            model.W[int(y_t),:] = W[int(y_t),:] + eta_t*x_t[:,0]
+            model.W[int(s_t),:] = W[int(s_t),:] - eta_t*x_t[:,0]
+        else:
+            model.W[int(y_t),:] = W[int(y_t),:] + eta_t*x_t
+            model.W[int(s_t),:] = W[int(s_t),:] - eta_t*x_t
     model.t = model.t + 1 # iteration no
 
     if(regularizer is not None):

@@ -111,7 +111,7 @@ class Options:
             
             if (UPmethod == 'M_PERCEPTRONM' or UPmethod == 'M_PERCEPTRONU' or UPmethod == 'M_PERCEPTRONS'):
                 self.bias            = True
-                self.p_kernel_degree = 1 
+                self.p_kernel_degree = 1
 
             elif (UPmethod == 'M_OGD'):
                 self.bias            = True
@@ -123,7 +123,7 @@ class Options:
 
             elif (UPmethod == 'M_PA' or UPmethod == 'M_PA1' or UPmethod =='M_PA2'):
                 self.bias            = True
-                self.p_kernel_degree = 1 
+                self.p_kernel_degree = 2 
                 self.C = 1
 
             elif (UPmethod == 'M_CW'):

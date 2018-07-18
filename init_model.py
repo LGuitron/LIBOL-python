@@ -158,9 +158,15 @@ class Model:
 
             self.task_type = 'mc';
             self.nb_class = nb_class;
-            
+
+            # Polynomial kernel 
+            if (options.p_kernel_degree > 1):
+                self.poly    = pp.PolynomialFeatures(degree = options.p_kernel_degree , include_bias = options.bias)
+                self.W_shape = self.poly.fit_transform(np.zeros((1,d))).shape
+                self.W       = np.zeros((int(nb_class),self.W_shape[1])) 
+
             # Bias term for each class
-            if(options.bias):
+            elif(options.bias):
                 self.W = np.zeros((int(nb_class),d+1))
 
             # No bias terms
@@ -168,20 +174,24 @@ class Model:
                 self.W = np.zeros((int(nb_class),d))
             
             if (UPmethod == 'M_PERCEPTRONM' or UPmethod == 'M_PERCEPTRONU' or UPmethod == 'M_PERCEPTRONS'):
-                self.bias   = options.bias
+                self.bias            = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
             
             elif (UPmethod == 'M_PA1' or UPmethod == 'M_PA2' or UPmethod =='M_PA'):
                 self.bias   = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
                 self.C = options.C
                 
             elif (UPmethod == 'M_OGD'):
                 self.bias   = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
                 self.C   = options.C;          # learning rate parameter
                 self.t   = 1;                  # iteration number
                 self.regularizer = options.regularizer
             
             elif (UPmethod == 'M_CW'):
                 self.bias   = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
                 self.eta   = options.eta
                 self.phi   = norm.ppf(self.eta)
                 if(self.bias):
@@ -191,6 +201,7 @@ class Model:
         
             elif(UPmethod =='M_AROW'):
                 self.bias   = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
                 self.r     = options.C                     # parameter of AROW
                 if(self.bias):
                     self.Sigma = options.a*np.identity(d+1)    # parameter of M_AROW
@@ -199,6 +210,7 @@ class Model:
             
             elif (UPmethod == 'M_SCW1'or UPmethod=='M_SCW2'):
                 self.bias   = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
                 self.C     = options.C;
                 self.phi   = norm.ppf(options.eta)
                 if(self.bias):
