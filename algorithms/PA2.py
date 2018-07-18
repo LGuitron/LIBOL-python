@@ -19,9 +19,16 @@ def PA2(y_t, x_t, model):
     w           = model.w
     C           = model.C
     bias        = model.bias
-    
+    degree      = model.p_kernel_degree     # Polynomial kernel degree
+
+    # Transform input vector
+    if(degree > 1):
+        poly = model.poly
+        x_t = np.reshape(x_t, (1,-1))       # Reshape x_t to matrix
+        x_t  = poly.fit_transform(x_t).T      # Polynomial feature mapping for x_t
+
     # Add bias term in feature vector
-    if(bias):
+    elif(bias):
         x_t = np.concatenate(([1],x_t))
     
     # Prediction
@@ -38,6 +45,10 @@ def PA2(y_t, x_t, model):
     if (l_t > 0):
         s_t = np.linalg.norm(x_t)**2
         gamma_t = l_t/(s_t+(1/(2*C)))      # PA-II
-        model.w = w + gamma_t*y_t*x_t
+        
+        if(degree > 1):
+            model.w = w + (gamma_t*y_t*x_t).T
+        else:
+            model.w = w + gamma_t*y_t*x_t
 
     return (model, hat_y_t, l_t)

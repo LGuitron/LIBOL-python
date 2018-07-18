@@ -65,7 +65,7 @@ class Options:
                 
             elif (UPmethod == 'CW'):
                 self.bias            = True
-                self.p_kernel_degree = 1 
+                self.p_kernel_degree = 1
                 self.eta             = 0.7  # in \eta in [0.5,1]
                 self.a               = 1
 
@@ -98,7 +98,7 @@ class Options:
                 self.bias            = True
                 self.p_kernel_degree = 1 
                 self.C               = 1         #i.e., parameter r
-                self.a = 1
+                self.a               = 1
 
             elif (UPmethod == 'NEW_ALGORITHM'):
                 pass

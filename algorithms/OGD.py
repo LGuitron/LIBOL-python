@@ -19,13 +19,20 @@ def OGD(y_t, x_t, model):
 
     # Initialization
     w           = model.w
-    loss_type   = model.loss_type     # type of loss
-    eta         = model.C             # learning rate
+    loss_type   = model.loss_type           # type of loss
+    eta         = model.C                   # learning rate
     bias        = model.bias
-    regularizer = model.regularizer   # Regularizer method
-    
+    regularizer = model.regularizer         # Regularizer method
+    degree      = model.p_kernel_degree     # Polynomial kernel degree
+
+    # Transform input vector
+    if(degree > 1):
+        poly = model.poly
+        x_t = np.reshape(x_t, (1,-1))       # Reshape x_t to matrix
+        x_t  = poly.fit_transform(x_t).T      # Polynomial feature mapping for x_t
+        
     # Add bias term in feature vector
-    if(bias):
+    elif(bias):
         x_t = np.concatenate(([1],x_t))
     
     # Prediction
@@ -36,35 +43,48 @@ def OGD(y_t, x_t, model):
         hat_y_t = -1
 
     # Making Update
-    eta_t   = eta/np.sqrt(model.t)              # learning rate = eta*(1/sqrt(t)) this learning rate decays over time
+    eta_t   = eta/np.sqrt(model.t)                              # learning rate = eta*(1/sqrt(t)) this learning rate decays over time
 
     # 0 - 1 Loss
     if loss_type == 0:
-        l_t = (hat_y_t != y_t)          # 0 - correct prediction, 1 - incorrect
+        l_t = (hat_y_t != y_t)                                  # 0 - correct prediction, 1 - incorrect
         if(l_t > 0):
-            w += eta_t*y_t*x_t                                   # Update w with hinge loss derivative
+            if(degree > 1):
+                w += (eta_t*y_t*x_t).T                     # Update w with hinge loss derivative
+            else:
+                w += eta_t*y_t*x_t                              # Update w with hinge loss derivative
 
     # Hinge Loss
     elif loss_type == 1:
         l_t = max(0,1-y_t*f_t) 
         if(l_t > 0):
-            w += eta_t*y_t*x_t                                   # Update w with hinge loss derivative
+            if(degree > 1):
+                w += (eta_t*y_t*x_t).T                     # Update w with hinge loss derivative
+            else:
+                w += eta_t*y_t*x_t                              # Update w with hinge loss derivative
 
 
     # Logistic Loss
     elif loss_type == 2:
         l_t = log(1+exp(-y_t*f_t)) 
         if(l_t > 0):
-            w += eta_t*y_t*x_t*(1/(1+exp(y_t*f_t)))                                  # Update w with hinge loss derivative
+            if(degree > 1):
+                w += (eta_t*y_t*x_t*(1/(1+exp(y_t*f_t)))).T     # Update w with log loss derivative
+            else:
+                w += eta_t*y_t*x_t*(1/(1+exp(y_t*f_t)))         # Update w with log loss derivative
             
     # Square Loss
     elif loss_type == 3:
         l_t = 0.5*(y_t - f_t)**2  
         if(l_t > 0):
-            w += -eta_t*(f_t-y_t)*x_t                                 # Update w with hinge loss derivative
+            if(degree > 1):
+                w += (-eta_t*(f_t-y_t)*x_t).T                   # Update w with square loss derivative
+            else:
+                w += -eta_t*(f_t-y_t)*x_t                       # Update w with square loss derivative
 
     else:
         print('Invalid loss type.')
+
     model.w = w
     if(regularizer is not None):
         model.w = regularizer.regularize(model.w, learning_rate=eta_t)

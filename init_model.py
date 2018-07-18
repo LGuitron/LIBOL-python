@@ -21,8 +21,9 @@ class Model:
             
             # Set weight vector size depending on polynomial feature map
             elif (options.p_kernel_degree > 1):
-                self.poly = pp.PolynomialFeatures(degree = options.p_kernel_degree , include_bias = options.bias)
-                self.w    = np.zeros(self.poly.fit_transform(np.zeros((1,d))).shape) 
+                self.poly    = pp.PolynomialFeatures(degree = options.p_kernel_degree , include_bias = options.bias)
+                self.w_shape = self.poly.fit_transform(np.zeros((1,d))).shape  
+                self.w       = np.zeros(self.w_shape) 
 
             # Dont add bias when explicitly specified
             elif (not options.bias):
@@ -35,8 +36,6 @@ class Model:
             if (UPmethod == 'PERCEPTRON' or UPmethod == 'PA'):
                 self.bias            = options.bias
                 self.p_kernel_degree = options.p_kernel_degree
-                
-            
             
             elif (UPmethod == 'GAUSSIAN_KERNEL_PERCEPTRON'):
                 self.max_sv       = options.max_sv                # Number of instances to keep for kernel approach
@@ -49,10 +48,12 @@ class Model:
             
             elif (UPmethod == 'PA1' or UPmethod == 'PA2'):
                 self.bias   = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
                 self.C = options.C
                 
             elif (UPmethod == 'OGD'):
                 self.bias        = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
                 self.t           = 1                    # iteration number
                 self.loss_type   = options.loss_type    # loss type
                 self.C           = options.C
@@ -73,8 +74,13 @@ class Model:
                 
             elif (UPmethod == 'CW'):
                 self.bias   = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
                 
-                if(self.bias):
+                # Matrix for transformed input data
+                if(self.p_kernel_degree > 1):
+                    self.Sigma = options.a*np.identity(self.w_shape[1])    # parameter of NAROW
+                
+                elif(self.bias):
                     self.Sigma = options.a*np.identity(d+1)    # parameter of CW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of CW
@@ -84,24 +90,41 @@ class Model:
             
             elif(UPmethod =='AROW'):
                 self.bias   = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
                 self.r     = options.C                         # parameter of AROW
-                if(self.bias):
+                
+                # Matrix for transformed input data
+                if(self.p_kernel_degree > 1):
+                    self.Sigma = options.a*np.identity(self.w_shape[1])    # parameter of NAROW
+                
+                
+                elif(self.bias):
                     self.Sigma = options.a*np.identity(d+1)    # parameter of AROW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of AROW
                 
             elif(UPmethod =='SOP'):
                 self.bias   = options.bias
+                self.p_kernel_degree = options.p_kernel_degree
+    
+                # Matrix for transformed input data
+                if(self.p_kernel_degree > 1):
+                    self.Sigma = options.a*np.identity(self.w_shape[1])    # parameter of NAROW
                 
-                if(self.bias):
+                elif(self.bias):
                     self.Sigma = options.a*np.identity(d+1)    # parameter of SOP
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of SOP
             
             elif (UPmethod == 'SCW'or UPmethod=='SCW2'):
                 self.bias   = options.bias
-
-                if(self.bias):
+                self.p_kernel_degree = options.p_kernel_degree
+                
+                # Matrix for transformed input data
+                if(self.p_kernel_degree > 1):
+                    self.Sigma = options.a*np.identity(self.w_shape[1])    # parameter of NAROW
+                
+                elif(self.bias):
                     self.Sigma = options.a*np.identity(d+1)    # parameter of SCW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of SCW
@@ -112,11 +135,18 @@ class Model:
                 
             elif (UPmethod == 'NAROW'):
                 self.bias   = options.bias
-                self.b     = options.C                         # parameter of NAROW
-                if(self.bias):
-                    self.Sigma = options.a*np.identity(d+1)    # parameter of NAROW
+                self.p_kernel_degree = options.p_kernel_degree
+                self.b     = options.C                                       # parameter of NAROW
+                
+                # Matrix for transformed input data
+                if(self.p_kernel_degree > 1):
+                    self.Sigma = options.a*np.identity(self.w_shape[1])    # parameter of NAROW
+                
+                # Matrix for regular input data
+                elif(self.bias):
+                    self.Sigma = options.a*np.identity(d+1)                  # parameter of NAROW
                 else:
-                    self.Sigma = options.a*np.identity(d)      # parameter of NAROW
+                    self.Sigma = options.a*np.identity(d)                    # parameter of NAROW
                 
             elif(UPmethod=='NEW_ALGORITHM'):
                 pass
