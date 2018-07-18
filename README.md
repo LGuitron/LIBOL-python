@@ -7,21 +7,21 @@ customizing these algorithms as needed
 
 ## Algorithms
 
-Binary Classification  | Multiclass Classification
----------------------- | -------------------------
-AROW                   | M_AROW
-CW                     | M_CW
-Kernel_OGD             | M_OGD
-Kernel_Perceptron      | M_PA
-NAROW                  | M_PA1
-OGD                    | M_PA2
-PA                     | M_PerceptronM
-PA1                    | M_PerceptronS
-PA2                    | M_PerceptronU
-Perceptron             | M_SCW1
-SCW                    | M_SCW2
-SCW2                   | 
-SOP                    |
+Binary Classification           | Multiclass Classification
+------------------------------- | -------------------------
+AROW                            | M_AROW
+CW                              | M_CW
+Gaussian_Kernel_OGD             | M_OGD
+Gaussian_Kernel_Perceptron      | M_PA
+NAROW                           | M_PA1
+OGD                             | M_PA2
+PA                              | M_PerceptronM
+PA1                             | M_PerceptronS
+PA2                             | M_PerceptronU
+Perceptron                      | M_SCW1
+SCW                             | M_SCW2
+SCW2                            | 
+SOP                             |
 
 
 ## Getting Started
@@ -108,17 +108,18 @@ nose2
 Hyperparameters for many of the algorithms can be setup in the options.py file.
 Modify this file in order to pick the parameters that work best for a particular dataset.
 
-Parameter   | Type        |                 Description
-------------|-------------|------------------------------------------------------------
-bias        | Boolean     | Add bias weight to w
-C           | Float       | Learning Rate / Aggresiveness
-loss_type   | Integer     | Loss function in OGD (0: 0-1 loss, 1: Hinge, 2: Log, 3: Square )
-a           | Float       | Initial value in diagonal matrix for prediction <br> confidence in CW algorithms
-eta         | Probability | Confidence threshold for CW algorithms
-regularizer | Function    | Function for sparcity regularization (functions in regularizers/Regularizer.py)
-max_sv      | Integer     | Number of support vectors taken into account in kernel algorithms
-sigma       | Float       | Variance parameter for Gaussian Kernel
-kernel      | Function    | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py) 
+Parameter       | Type        |                 Description
+----------------|-------------|------------------------------------------------------------
+bias            | Boolean     | Add bias weight to w
+C               | Float       | Learning Rate / Aggresiveness
+p_kernel_degree | Integer      | Degree of polynomial kernel for input preprocessing
+loss_type       | Integer     | Loss function in OGD (0: 0-1 loss, 1: Hinge, 2: Log, 3: Square )
+a               | Float       | Initial value in diagonal matrix for prediction <br> confidence in CW algorithms
+eta             | Probability | Confidence threshold for CW algorithms
+regularizer     | Function    | Function for sparcity regularization (functions in regularizers/Regularizer.py)
+max_sv          | Integer     | Number of support vectors taken into account in kernel algorithms
+sigma           | Float       | Variance parameter for Gaussian Kernel
+kernel          | Function    | Kernel method used (gaussian_kernel implemented, <br> additional kernels can be included in kernels/Kernels.py) 
 
 ### Automatic hyperparameter tuning
 
