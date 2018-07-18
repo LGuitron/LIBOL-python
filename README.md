@@ -7,21 +7,21 @@ customizing these algorithms as needed
 
 ## Algorithms
 
-Binary Classification  | Multiclass Classification
----------------------- | -------------------------
-AROW                   | M_AROW
-CW                     | M_CW
-Kernel_OGD             | M_OGD
-Kernel_Perceptron      | M_PA
-NAROW                  | M_PA1
-OGD                    | M_PA2
-PA                     | M_PerceptronM
-PA1                    | M_PerceptronS
-PA2                    | M_PerceptronU
-Perceptron             | M_SCW1
-SCW                    | M_SCW2
-SCW2                   | 
-SOP                    |
+Binary Classification           | Multiclass Classification
+------------------------------- | -------------------------
+AROW                            | M_AROW
+CW                              | M_CW
+Gaussian_Kernel_OGD             | M_OGD
+Gaussian_Kernel_Perceptron      | M_PA
+NAROW                           | M_PA1
+OGD                             | M_PA2
+PA                              | M_PerceptronM
+PA1                             | M_PerceptronS
+PA2                             | M_PerceptronU
+Perceptron                      | M_SCW1
+SCW                             | M_SCW2
+SCW2                            | 
+SOP                             |
 
 
 ## Getting Started
