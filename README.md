@@ -72,6 +72,8 @@ the execution of this file requires the following console parameters:
  -f : File format of input data, formats supported are:
      libsvm
 
+ -n : Number of runs to execute algorithm (Results displayed are average values)
+
  -h / --help: Adding this flag displays input information in the command line
 
 ```
@@ -133,14 +135,17 @@ The ranges of values to be tested for every hyperparameter are represented by li
 Algorithms are compared based on the task that they are able to perform (binary classification or multiclass classification)
 The console parameters that can be set for this comparison are:
 
+```
  -d : Path to training dataset
 
 -t : Type of problem to solve, possible options are:
      bc - Binary Classification
      mc - Multiclass Classification
- 
  -f : File format of input data, formats supported are:
      libsvm
+
+ -n : Number of runs for each algorithm (Results displayed are average values)
+```
 
 ### Input Examples
 ```
@@ -156,3 +161,6 @@ Running the comparison will display algorithm statistics for all algorithms for 
 
 #### Multiclass Classification
 ![alt text](https://github.com/LGuitron/LIBOL-python/blob/master/results/mc_plot_error_rate.png)
+
+
+## References
