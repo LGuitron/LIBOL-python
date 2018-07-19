@@ -1,3 +1,2 @@
-poly kernel: M_CW, M_SCW, M_AROW
 tests      : Tests with fixed random seeds
 Kernels    : Add poly kernel option for gaussian kernel algorithms?

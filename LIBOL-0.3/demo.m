@@ -1,6 +1,6 @@
 function [mistake_rate, mistake_std, mean_nSV, std_nSV, mean_time, std_time] = demo(varargin)
 %DEMO: demo the usage of LIBOL
-% demo(task_type, algorithm_name, dataset_name, file_format, impl_lang);
+% demo(task_type, algorithm_name, dataset_name, file_format, impl_lang, shuffle_data = true);
 %--------------------------------------------------------------------------
 % Examples:
 %   demo
@@ -43,6 +43,7 @@ nb_runs = 20;
 ID_list = zeros(nb_runs,n);
 for i=1:nb_runs,
     ID_list(i,:) = rand_c(1:n, i);
+
 end
 % END of generating test ID sequence
 
@@ -65,12 +66,12 @@ std_nSV      = std(res.nSV);
 mean_time    = mean(res.time);
 std_time     = std(res.time);
 
-fprintf(1,'-------------------------------------------------------------------------------\n');
-fprintf(1,'Dataset name: %s (n=%d,d=%d,m=%d)\t nb of runs (permutations): %d \n', dataset_name, n,size(xt,2),length(unique(y)),nb_runs);
-fprintf(1,'-------------------------------------------------------------------------------\n');
-fprintf(1,'Algorithm:  \t mistake rate \t\t  nb of updates\t\t cpu time (seconds)\n');
-fprintf(1,'%-12s\t %.4f +/- %.4f\t  %.2f +/- %.2f \t %.4f +/- %.4f\n', options.method,mistake_rate, mistake_std, mean_nSV, std_nSV, mean_time, std_time);
-fprintf(1,'-------------------------------------------------------------------------------\n');
+%fprintf(1,'-------------------------------------------------------------------------------\n');
+%fprintf(1,'Dataset name: %s (n=%d,d=%d,m=%d)\t nb of runs (permutations): %d \n', dataset_name, n,size(xt,2),length(unique(y)),nb_runs);
+%fprintf(1,'-------------------------------------------------------------------------------\n');
+%fprintf(1,'Algorithm:  \t mistake rate \t\t  nb of updates\t\t cpu time (seconds)\n');
+%fprintf(1,'%-12s\t %.4f +/- %.4f\t  %.2f +/- %.2f \t %.4f +/- %.4f\n', options.method,mistake_rate, mistake_std, mean_nSV, std_nSV, mean_time, std_time);
+%fprintf(1,'-------------------------------------------------------------------------------\n');
 %%
 
 function [task_type, algorithm_name, dataset_name, file_format]=parse_arg(varargin)

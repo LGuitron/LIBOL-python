@@ -1,4 +1,5 @@
 from run import run
+from compare import compare
 from oct2py import octave
 import os
 import unittest
@@ -26,8 +27,7 @@ class LIBOLtests(unittest.TestCase):
         octave.run('./LIBOL-0.3/make.m')
         print()
 
-    # Make sure binary classification Algorithms have the same performance, and equal or better execution times
-    # BC algorithms = ['Perceptron','Kernel_Perceptron', 'PA','PA1','PA2','OGD','Kernel_OGD','SOP','CW','SCW','SCW2','AROW','NAROW'] 
+    # Test for similar performance and execution times for binary classification algorithms with random dataset sampling
     def test_bc(self):
         
         # Test all common algorithms
@@ -57,8 +57,8 @@ class LIBOLtests(unittest.TestCase):
                 # Test for similar execution time (python takes at most 1.5 more time as octave)
                 self.assertLessEqual(mean_time_py, 1.5*mean_time_oct)
 
-    # Make sure multiclass classification Algorithms have the same performance, and equal or better execution times
-    # BC algorithms = ['M_AROW','M_CW','M_OGD','M_PA','M_PA1','M_PA2','M_PerceptronM','M_PerceptronS','M_PerceptronU','M_SCW1','M_SCW2'] 
+
+    # Test for similar performance and execution times for binary classification algorithms with random dataset sampling
     def test_mc(self):
         
         # Test all common algorithmstest_bc
@@ -110,11 +110,35 @@ class LIBOLtests(unittest.TestCase):
             
             # Test all files in directory
             for filename in self.bc_files:
-
+                
+                path = self.bc_test_dir + '/' + filename
+                
                 # Test for different loss types
                 for loss_type in range(4):
-                    path = self.bc_test_dir + '/' + filename
                     result_python = run('bc', algorithm, path, 'libsvm', print_results = False, test_parameters = True, loss_type = loss_type)
 
+    
+    # Test functionality of bc algorithm comparison
+    def test_compare_bc(self):
+        
+        print("Testing BC Comparison")
+        
+        # Test all files in directory
+        for filename in self.bc_files:
+
+            path = self.bc_test_dir + '/' + filename
+            result_python = compare('bc', path, 'libsvm', 1, print_results = False, showPlot = False)
+        
+        
+    def test_compare_mc(self):
+        
+        print("Testing MC Comparison")
+        
+        # Test all files in directory
+        for filename in self.mc_files:
+            
+            path = self.mc_test_dir + '/' + filename
+            result_python = compare('mc', path, 'libsvm', 1, print_results = False, showPlot = False)
+    
 if __name__ == '__main__':
     unittest.main()

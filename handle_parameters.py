@@ -8,6 +8,9 @@ def handle_parameters():
     parser.add_argument('-d', type=str, help='Path to dataset (Default ./data/test/bc/breast_cancer_scale.txt)', dest='path_to_dataset', default='./data/test/bc/breast_cancer_scale.txt') # dataset
     
     parser.add_argument('-f', type=str, help='Input file format (Default libsvm)', dest='file_format',default='libsvm')                          # file format
+    
+    parser.add_argument('-n', type=int, help='Number of runs to execute algorithm', dest='n',default=20)                          # file format
+    
     args = parser.parse_args()
 
-    return args.task, args.algorithm, args.path_to_dataset, args.file_format
+    return args.task, args.algorithm, args.path_to_dataset, args.file_format, args.n

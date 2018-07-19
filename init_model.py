@@ -194,16 +194,26 @@ class Model:
                 self.p_kernel_degree = options.p_kernel_degree
                 self.eta   = options.eta
                 self.phi   = norm.ppf(self.eta)
-                if(self.bias):
-                    self.Sigma = options.a*np.identity(d+1)    # parameter of M_SCW
+                
+                # Matrix for transformed input data
+                if(self.p_kernel_degree > 1):
+                    self.Sigma = options.a*np.identity(self.W_shape[1])    # parameter of NAROW
+                
+                elif(self.bias):
+                    self.Sigma = options.a*np.identity(d+1)                # parameter of M_SCW
                 else:
-                    self.Sigma = options.a*np.identity(d)      # parameter of M_SCW
+                    self.Sigma = options.a*np.identity(d)                  # parameter of M_SCW
         
             elif(UPmethod =='M_AROW'):
                 self.bias   = options.bias
                 self.p_kernel_degree = options.p_kernel_degree
                 self.r     = options.C                     # parameter of AROW
-                if(self.bias):
+                
+                # Matrix for transformed input data
+                if(self.p_kernel_degree > 1):
+                    self.Sigma = options.a*np.identity(self.W_shape[1])    # parameter of NAROW
+                
+                elif(self.bias):
                     self.Sigma = options.a*np.identity(d+1)    # parameter of M_AROW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of M_AROW
@@ -213,7 +223,12 @@ class Model:
                 self.p_kernel_degree = options.p_kernel_degree
                 self.C     = options.C;
                 self.phi   = norm.ppf(options.eta)
-                if(self.bias):
+                
+                # Matrix for transformed input data
+                if(self.p_kernel_degree > 1):
+                    self.Sigma = options.a*np.identity(self.W_shape[1])    # parameter of NAROW
+                
+                elif(self.bias):
                     self.Sigma = options.a*np.identity(d+1)    # parameter of M_SCW
                 else:
                     self.Sigma = options.a*np.identity(d)      # parameter of M_SCW

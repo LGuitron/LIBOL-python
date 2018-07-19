@@ -123,12 +123,12 @@ class Options:
 
             elif (UPmethod == 'M_PA' or UPmethod == 'M_PA1' or UPmethod =='M_PA2'):
                 self.bias            = True
-                self.p_kernel_degree = 2 
+                self.p_kernel_degree = 1 
                 self.C = 1
 
             elif (UPmethod == 'M_CW'):
                 self.bias            = True
-                self.p_kernel_degree = 1 
+                self.p_kernel_degree = 1
                 self.eta             = 0.75  # in \eta in [0.5,1]
                 self.a               = 1
 

@@ -1,5 +1,6 @@
 import argparse
 import numpy as np
+from numpy.random import RandomState
 from math import floor
 from load_data import load_data
 from init_options import Options
@@ -9,17 +10,20 @@ from CV_algorithm import CV_algorithm
 from arg_check import arg_check
 from handle_parameters import handle_parameters
 
-def run(task_type, algorithm_name, dataset_name, file_format, print_results = True, test_parameters = False, loss_type = None, tune_params = False):
+def run(task_type, algorithm_name, dataset_name, file_format, nb_runs = 1, shuffle_data = True,  print_results = True, test_parameters = False, loss_type = None):
     # run: initialize the options for each method
     #--------------------------------------------------------------------------
     # INPUT:
-    #       task_type:         type of task (bc or mc)
-    #       algorithm_name     Name of algorithm to be executed
-    #       dataset_name:      Path to dataset used
-    #       file_format:       {libsvm}
-    #       print_results      Show execution results in CLI
-    #       test_parameters    Use parameters equal to LIBOL Matlab for testing purposes
-    #       loss_type          Select different loss_types for OGD for testing purposes
+    #       task_type:          type of task (bc or mc)
+    #       algorithm_name      Name of algorithm to be executed
+    #       dataset_name:       Path to dataset used
+    #       file_format:        Currently only accepting {libsvm} format
+    #       nb_runs:            Number of times to execute each algorithm
+    #       shuffle_data:       Negative: Make random data permutation Positive: Use value as the seed
+    #       print_results:      Show execution results in CLI
+    #       test_parameters:    Use parameters equal to LIBOL Matlab for testing purposes
+    #       loss_type:          Select different loss_types for OGD for testing purposes
+    
 
     return_vals = load_data(dataset_name, file_format, task_type) 
     
@@ -58,12 +62,20 @@ def run(task_type, algorithm_name, dataset_name, file_format, print_results = Tr
     
     
     # START generating test ID sequence...
-    nb_runs = 20
+    #nb_runs = 20
     ID_list = np.zeros((nb_runs,n))
 
     for i in range (nb_runs):
-        ID_list[i]= np.random.permutation(n)
-
+        
+        # Make random permutation
+        if(shuffle_data):
+            ID_list[i]= np.random.permutation(n)
+    
+        # Make permutation according to a given seed
+        else:
+            ID_list[i]= np.arange(n)
+        
+        #print(ID_list[i])
 
     # Arrays with algorithm stats
     err_count_arr   = np.zeros(nb_runs)
@@ -109,5 +121,5 @@ def run(task_type, algorithm_name, dataset_name, file_format, print_results = Tr
     return (mean_error_count, mean_update_count, mean_time, np.mean(mistakes_arr, axis=1), np.mean(nb_SV_cum_arr, axis=1), np.mean(time_cum_arr, axis=1), captured_t)
 
 if __name__ == '__main__':
-    task_type, algorithm_name, dataset_name, file_format = handle_parameters()
-    run(task_type, algorithm_name, dataset_name, file_format)
+    task_type, algorithm_name, dataset_name, file_format, n = handle_parameters()
+    run(task_type, algorithm_name, dataset_name, file_format, nb_runs = n)

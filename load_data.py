@@ -3,20 +3,8 @@ import numpy as np
 
 def load_data(dataset_name, file_format, task_type):
     
-    #case 'mat' % matlab format
-    #        load(sprintf('data/%s.mat',dataset_name));
-    #        [n,d]   = size(data);
-    #        xt      = data(:,2:d); y = data(:,1); 
-
-    #case 'arff'
-    #data    = arff2matlab(sprintf('data/%s.arff',dataset_name));
-    #[n,d]   = size(data);
-    #xt      = data(:,1:d-1); y = data(:,d);
-    #libc = cdll.msvcrt
-    
     if file_format == 'libsvm':
         y, xt, n = libsvm.svm_read_problem(dataset_name)
-        #y, xt, n = libsvm.svm_read_problem('data/' + dataset_name)
     
     else:
         print('The file format is not supported.') 

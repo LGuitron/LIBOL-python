@@ -5,7 +5,7 @@ from handle_parameters import handle_parameters
 from run import run
 from plot import plot
 
-def compare(task_type, dataset_name, file_format, showPlot = True):
+def compare(task_type, dataset_name, file_format, nb_runs, print_results = True, showPlot = True):
     #--------------------------------------------------------------------------
     # This function runs all of the algorithms available for either bc or mc
     # Algorithms run with the options specified in the init_options.py file
@@ -28,7 +28,7 @@ def compare(task_type, dataset_name, file_format, showPlot = True):
     run_stats = []
     
     for algorithm_name in algorithms:
-        stats = run(task_type, algorithm_name, dataset_name, file_format, print_results = True)
+        stats = run(task_type, algorithm_name, dataset_name, file_format, nb_runs = nb_runs, print_results = print_results)
         run_stats.append(stats)
     
     if(showPlot):
@@ -37,5 +37,5 @@ def compare(task_type, dataset_name, file_format, showPlot = True):
     return run_stats
 
 if __name__ == '__main__':
-    task_type, _, dataset_name, file_format = handle_parameters()
-    compare(task_type, dataset_name, file_format)
+    task_type, _, dataset_name, file_format, nb_runs = handle_parameters()
+    compare(task_type, dataset_name, file_format, nb_runs)
