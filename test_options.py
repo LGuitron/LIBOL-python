@@ -87,7 +87,7 @@ class TestOptions:
                 pass
             
             else:
-                print('Unknown method.')
+                print('Unknown method bc test_options.')
 
         elif (task_type == 'mc'):
             

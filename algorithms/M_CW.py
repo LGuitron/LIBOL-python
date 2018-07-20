@@ -56,12 +56,16 @@ def M_CW(y_t, x_t, model):
     s_t = np.argmax(Fs)
     m_t = F_t[int(y_t)] - F_t[s_t]
     v_t = np.matmul(np.matmul(x_t,Sigma), x_t.T)  # confidence
-    l_t = phi*np.sqrt(v_t)-m_t                    # loss
-
+    
+    if(v_t > 0):
+        l_t = phi*np.sqrt(v_t)-m_t                    # loss
+    else:
+        l_t = float('nan')
     #--------------------------------------------------------------------------
     # Making Update
     #--------------------------------------------------------------------------
-    if m_t < phi*np.sqrt(v_t):
+        
+    if v_t >= 0 and m_t < phi*np.sqrt(v_t):
         
         alpha_t=max(0, (-m_t*psi+np.sqrt(m_t**2*psi**2-m_t**2*psi+2*v_t*phi**2*psi))/(2*v_t*psi))
         u_t=(1/8)*(-alpha_t*v_t*phi+np.sqrt(alpha_t**2*v_t**2*phi**2+8*v_t))**2

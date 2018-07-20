@@ -104,7 +104,7 @@ class Options:
                 pass
             
             else:
-                print('Unknown method.')
+                print('Unknown method BC init options.')
         
         # Options for Multiclass Classification algorithms
         elif (task_type == 'mc'):

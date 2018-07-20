@@ -119,6 +119,6 @@ elseif strcmp(task_type, 'mc')
             % initialie your parameters here...
             return;            
         otherwise
-            disp('Unknown method.');
+            disp('Unknown method M options.');
     end
 end

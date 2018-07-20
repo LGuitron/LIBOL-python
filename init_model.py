@@ -152,7 +152,7 @@ class Model:
                 pass
 
             else:
-                print('Unknown method.')
+                print('Unknown method bc init model.')
         
         elif (options.task_type == 'mc'):
 
@@ -237,4 +237,4 @@ class Model:
                 pass
 
             else:
-                print('Unknown method.')
+                print('Unknown method init model.')

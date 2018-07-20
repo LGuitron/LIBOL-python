@@ -61,8 +61,8 @@ switch upper(options.method),
         % find the best paramters via validation below
         % options = best_paramter_....
         return;
-    otherwise
-        disp('Unknown method.');
+    %otherwise
+    %    disp('Unknown method M CV.');
 end
 
 function [options] = best_parameter_C(Y,X,options)

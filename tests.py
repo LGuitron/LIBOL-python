@@ -57,7 +57,6 @@ class LIBOLtests(unittest.TestCase):
                 # Test for similar execution time (python takes at most 1.5 more time as octave)
                 self.assertLessEqual(mean_time_py, 1.5*mean_time_oct)
 
-
     # Test for similar performance and execution times for binary classification algorithms with random dataset sampling
     def test_mc(self):
         
@@ -139,6 +138,6 @@ class LIBOLtests(unittest.TestCase):
             
             path = self.mc_test_dir + '/' + filename
             result_python = compare('mc', path, 'libsvm', 1, print_results = False, showPlot = False)
-    
+
 if __name__ == '__main__':
     unittest.main()

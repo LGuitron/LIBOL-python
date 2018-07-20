@@ -107,6 +107,6 @@ elseif strcmp(options.task_type, 'mc'),
             % initialize the parameters of your algorithm...
             return;            
         otherwise
-            disp('Unknown method.');
+            disp('Unknown method M model.');
     end
 end
