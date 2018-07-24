@@ -27,12 +27,41 @@ class LIBOLtests(unittest.TestCase):
         octave.run('./LIBOL-0.3/make.m')
         print()
 
+
+    # Test for same result when not shuffling data
+    def test_unshuffled_bc(self):
+
+        # Test all common algorithms
+        for algorithm in self.common_algorithms_bc:
+            print("Testing ", algorithm ," unshuffled data (bc)")
+            
+            # Test all files in directory
+            for filename in self.bc_files:
+                
+                
+                path = self.bc_test_dir + '/' + filename
+                path_octave = '/test/bc/' + filename
+                
+                # Octave execution
+                mean_err_oct, std_error_oct, mean_nSV_oct, std_nSV_oct, mean_time_oct, std_time_oct = octave.feval('./LIBOL-0.3/demo.m', 'bc',algorithm,path_octave,'libsvm','c', 'false',nout = 6)
+                
+                # Python execution
+                result_python = run('bc', algorithm, path, 'libsvm', nb_runs=1, shuffle_data = False, print_results = False, test_parameters = True)
+                mean_err_py  = result_python[0]
+                mean_nSV_py  = result_python[1]
+                mean_time_py = result_python[2]
+                
+                # Test for the same results
+                self.assertEqual(round(mean_err_oct,6), mean_err_py)
+                
+
+    '''
     # Test for similar performance and execution times for binary classification algorithms with random dataset sampling
     def test_bc(self):
         
         # Test all common algorithms
         for algorithm in self.common_algorithms_bc:
-            print("Testing ", algorithm ," (bc)")
+            print("Testing ", algorithm ," shuffled data (bc)")
             
             # Test all files in directory
             for filename in self.bc_files:
@@ -138,6 +167,7 @@ class LIBOLtests(unittest.TestCase):
             
             path = self.mc_test_dir + '/' + filename
             result_python = compare('mc', path, 'libsvm', 1, print_results = False, showPlot = False)
+    '''
 
 if __name__ == '__main__':
     unittest.main()

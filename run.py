@@ -19,12 +19,10 @@ def run(task_type, algorithm_name, dataset_name, file_format, nb_runs = 1, shuff
     #       dataset_name:       Path to dataset used
     #       file_format:        Currently only accepting {libsvm} format
     #       nb_runs:            Number of times to execute each algorithm
-    #       shuffle_data:       Negative: Make random data permutation Positive: Use value as the seed
+    #       shuffle_data:       Boolean to determine if the dataset will be shuffled
     #       print_results:      Show execution results in CLI
     #       test_parameters:    Use parameters equal to LIBOL Matlab for testing purposes
     #       loss_type:          Select different loss_types for OGD for testing purposes
-    
-
     return_vals = load_data(dataset_name, file_format, task_type) 
     
     if return_vals is None:
@@ -67,14 +65,17 @@ def run(task_type, algorithm_name, dataset_name, file_format, nb_runs = 1, shuff
 
     for i in range (nb_runs):
         
+        #print("VALUE: ", shuffle_data)
         # Make random permutation
         if(shuffle_data):
             ID_list[i]= np.random.permutation(n)
-    
+            #print("TRUE")
         # Make permutation according to a given seed
         else:
             ID_list[i]= np.arange(n)
-        
+            #print("FALSE")
+            
+        #print("PYTHON")
         #print(ID_list[i])
 
     # Arrays with algorithm stats
@@ -103,9 +104,9 @@ def run(task_type, algorithm_name, dataset_name, file_format, nb_runs = 1, shuff
         time_cum_arr[:,i]  = ticks
         
 
-    mean_error_count  = round(np.mean(err_count_arr)/n, 4)
-    mean_update_count = round(np.mean(nSV_arr), 4)
-    mean_time         = round(np.mean(time_arr),4)
+    mean_error_count  = round(np.mean(err_count_arr)/n, 6)
+    mean_update_count = round(np.mean(nSV_arr), 6)
+    mean_time         = round(np.mean(time_arr),6)
     mean_mistakes     = np.mean(mistakes_arr, axis = 1)
 
     if(print_results):
