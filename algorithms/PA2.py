@@ -45,10 +45,10 @@ def PA2(y_t, x_t, model):
     if (l_t > 0):
         s_t = np.linalg.norm(x_t)**2
         gamma_t = l_t/(s_t+(1/(2*C)))      # PA-II
-        
         if(degree > 1):
-            model.w = w + (gamma_t*y_t*x_t).T
+            w = w + (gamma_t*y_t*x_t).T
         else:
-            model.w = w + gamma_t*y_t*x_t
-
+            w = w + gamma_t*y_t*x_t
+    model.w = w
+        
     return (model, hat_y_t, l_t)

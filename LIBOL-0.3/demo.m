@@ -20,7 +20,7 @@ function [mistake_rate, mistake_std, mean_nSV, std_nSV, mean_time, std_time] = d
 %--------------------------------------------------------------------------
 
 % parse the input arguments
-[task_type, algorithm_name, dataset_name, file_format, shuffle_data] = parse_arg(varargin{:});
+[task_type, algorithm_name, dataset_name, file_format] = parse_arg(varargin{:});
 
 % load the data from the given filename
 [ xt, y, n] = load_data(dataset_name, file_format, task_type); 
@@ -43,13 +43,7 @@ nb_runs = 20;
 ID_list = zeros(nb_runs,n);
 
 for i=1:nb_runs,
-    if(shuffle_data)
-        ID_list(i,:) = rand_c(1:n, i);
-    else
-        ID_list(i,:) = [1:1:n];
-    %disp("OCTAVE")
-    %disp(ID_list)
-    endif
+    ID_list(i,:) = rand_c(1:n, i);
 end
 % END of generating test ID sequence
 
@@ -92,7 +86,6 @@ switch nargin,
         algorithm_name  = 'Perceptron';
         dataset_name    = 'svmguide3';
         file_format     = 'mat';
-        shuffle_data    = false;
     case 1
         task_type       = varargin{1};
         if strcmp(varargin{1},'mc'),
@@ -103,7 +96,6 @@ switch nargin,
             dataset_name    = 'svmguide3';            
         end
         file_format     = 'mat';
-        shuffle_data    = false;
     case 2
         task_type       = varargin{1};
         algorithm_name  = varargin{2};        
@@ -113,19 +105,16 @@ switch nargin,
             dataset_name    = 'svmguide3';
         end
         file_format     = 'mat';
-        shuffle_data    = false;
     case 3
         task_type       = varargin{1};
         algorithm_name  = varargin{2};        
         dataset_name    = varargin{3};
         file_format     = 'mat';
-        shuffle_data    = false;
     case 4
         task_type       = varargin{1};
         algorithm_name  = varargin{2};
         dataset_name    = varargin{3};
         file_format     = varargin{4};
-        shuffle_data    = false;
     case 5
         task_type       = varargin{1};
         algorithm_name  = varargin{2};
@@ -134,16 +123,6 @@ switch nargin,
         if strcmp(varargin{5},'c'),    % c implementation
             algorithm_name = sprintf('%s_c',varargin{2});
         end
-        shuffle_data    = false;
-    case 6
-        task_type       = varargin{1};
-        algorithm_name  = varargin{2};
-        dataset_name    = varargin{3};
-        file_format     = varargin{4};        
-        if strcmp(varargin{5},'c'),    % c implementation
-            algorithm_name = sprintf('%s_c',varargin{2});
-        end
-        shuffle_data    = str2num(varargin{6});
     otherwise
         disp('wrong arugement.'); help demo;         
         return;

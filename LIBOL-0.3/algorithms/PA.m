@@ -37,6 +37,7 @@ end
 l_t = max(0,1-y_t*f_t);
 if (l_t > 0)
     s_t = norm(x_t)^2;
+    s_t = round(s_t, 1)
     if (s_t > 0),
         gamma_t = l_t/s_t; %gamma_t = min(C,l_t/s_t);(PA-I)
     else
