@@ -1,2 +1,0 @@
-tests      : Tests with fixed random seeds
-Kernels    : Add poly kernel option for gaussian kernel algorithms?
