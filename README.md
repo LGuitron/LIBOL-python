@@ -164,3 +164,5 @@ Running the comparison will display algorithm statistics for all algorithms for 
 
 
 ## References
+
+S.C.H. Hoi, J. Wang, P. Zhao. LIBOL : A Library for Online Learning Algorithms. Journal of Machine Learning Research 15 (2014) 495-499. pp 8 - 17 
