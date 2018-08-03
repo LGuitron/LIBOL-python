@@ -117,9 +117,9 @@ class Options:
                 self.bias            = True
                 self.p_kernel_degree = 1 
                 self.C = 1
-                #self.regularizer = None                           # No regularizer
+                self.regularizer = None                           # No regularizer
                 #self.regularizer = L0 (theta = 1.5)               # Coefficient rounding regularizer
-                self.regularizer  = TGD(theta = 1.5, g = 0.025)    # L1 regularizer (gradual decrease of small coefficients)
+                #self.regularizer  = TGD(theta = 1.5, g = 0.025)    # L1 regularizer (gradual decrease of small coefficients)
 
             elif (UPmethod == 'M_PA' or UPmethod == 'M_PA1' or UPmethod =='M_PA2'):
                 self.bias            = True
