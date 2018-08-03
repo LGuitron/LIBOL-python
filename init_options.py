@@ -51,9 +51,9 @@ class Options:
                 self.p_kernel_degree = 1 
                 self.loss_type       = 1                              # type of loss (0, 0-1 loss, 1 - hinge, 2-log, 3-square )
                 self.C               = 1
-                #self.regularizer    = None                           # No regularizer
+                self.regularizer    = None                            # No regularizer
                 #self.regularizer    = L0 (theta = 1.5)               # Coefficient rounding regularizer
-                self.regularizer     = TGD(theta = 1.5, g = 0.025)    # L1 regularizer (gradual decrease of small coefficients)
+                #self.regularizer     = TGD(theta = 1.5, g = 0.025)   # L1 regularizer (gradual decrease of small coefficients)
             
             elif (UPmethod == 'GAUSSIAN_KERNEL_OGD'):
                 self.loss_type    = 1                           # type of loss (0, 0-1 loss, 1 - hinge, 2-log, 3-square )
