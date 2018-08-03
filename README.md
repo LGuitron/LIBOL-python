@@ -165,4 +165,16 @@ Running the comparison will display algorithm statistics for all algorithms for 
 
 ## References
 
-S.C.H. Hoi, J. Wang, P. Zhao. LIBOL : A Library for Online Learning Algorithms. Journal of Machine Learning Research 15 (2014) 495-499. pp 8 - 17 
+S.C.H. Hoi, J. Wang, P. Zhao. LIBOL : A Library for Online Learning Algorithms. Journal of Machine Learning Research 15 (2014) 495-499. pp 8 – 17
+
+F. Rosenblatt, The perceptron: a probabilistic model for information storage and organization in 	the brain., Psychological review 65 (6) (1958) 386.
+
+K. Crammer, O. Dekel, J. Keshet, S. Shalev-Shwartz,Y. Singer, Online passive-    	aggressive algorithms, The Journalof Machine Learning Research 7 (2006) 551–585.
+
+E. Hazan, A. Rakhlin, P. L. Bartlett, Adaptive online gradient descent, in: Advances in Neural 	Information Processing Systems, 2007, pp. 65–72.
+
+M. Dredze, K. Crammer, F. Pereira, Confidence-weighted linear classification, in: Proceedings 	of the 25th international conference on Machine learning, ACM, 2008, pp. 264–271.
+
+K. Crammer, A. Kulesza, M. Dredze, Adaptive regularization of weight vectors, Machine 	Learning (2009) 1–33.
+
+J. Langford, L. Li, T. Zhang, Sparse online learning via truncated gradient, The Journal of 	Machine Learning Research 10 (2009) 777–801.
